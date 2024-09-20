@@ -1,0 +1,73 @@
+
+.box-page img{
+  width: 1000px;
+  height: 400px;
+  border-radius: 25px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+.box-product{
+  display: flex;
+  justify-content: center;
+  background-color: #EBD96B;
+  width: auto;
+  height: 100px;
+  margin-top: 20px;
+}
+
+.box-product img{
+  margin-left: 90px;
+  margin-top: 15px;
+  width: 70px;
+  height: 70px;
+}
+
+.Naw-arrivals{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 26px;
+  margin-left: 20px;
+}
+
+
+/*ปรับขนาด 3*3 ไม่ต้องยุ่งดีกว่า*/
+.products {
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr ;
+  place-items: center;
+}
+
+
+/*ปรับขนาดรูปภาพ*/
+.product img {
+  width: 250px;
+  height: 350px;
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+
+/*ปรับให้ตัวอักษรอยู่รงกลาง ไม่ยุ่งดีเเล้ว*/
+.product .description {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 20px;
+}
+
+.product .description .name-pro{
+  font-size: 18px;
+  color: #003459;
+}
+
+.product .description .money-color{
+  margin-bottom: 40px;
+}
+
+/*ส่วนเสริม*/
+.product:hover {
+  transition: 0.3s ease-in;
+  cursor: pointer;
+}
+
+

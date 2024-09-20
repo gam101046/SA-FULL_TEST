@@ -1,0 +1,320 @@
+/* .homemyproduct{
+    margin-top: -1880px;
+    margin-left: -60px;
+  }
+  
+  .headmyproducts {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: 70px;
+  
+  }
+  
+  
+  .box-page img{
+    width: 1000px;
+    height: 400px;
+    border-radius: 25px;
+    margin-left: 30px;
+    margin-top: 20px;
+  }
+  
+  .box-product{
+    display: flex;
+    justify-content: center;
+    background-color: #EBD96B;
+    width: 1470px;
+    height: 100px;
+    margin-top: 20px;
+  }
+  
+  .box-product img{
+    margin-left: 90px;
+    margin-top: 15px;
+    width: 70px;
+    height: 70px;
+  }
+  
+  .Naw-arrivals{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 26px;
+    margin-left: 20px;
+  }
+   */
+  
+  /*ปรับขนาด 3*3 ไม่ต้องยุ่งดีกว่า*/
+  /* .products {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+    place-items: center;
+  }
+   */
+  
+  /*ปรับขนาดรูปภาพ*/
+  /* .product img {
+    width: 250px;
+    height: 350px;
+    border-radius: 25px;
+    margin-bottom: 20px;
+  } */
+  
+  /*ปรับให้ตัวอักษรอยู่รงกลาง ไม่ยุ่งดีเเล้ว*/
+  /* .product .description {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 20px;
+  }
+  
+  .product .description .name-pro{
+    font-size: 18px;
+    color: #003459;
+  }
+  
+  .product .description .money-color{
+    margin-bottom: 40px;
+  } */
+  
+  /*ส่วนเสริม*/
+  /* .product:hover {
+    transition: 0.3s ease-in;
+    cursor: pointer;
+  } */
+
+
+
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  width: 100%;
+  height: auto;
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.index {
+  position: absolute;
+  top: 0px;
+  left: 68px;
+  width: 1302px;
+  height: 800px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 20px;
+}
+.index h2 {
+  position: absolute;
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  font-weight: Normal;
+  padding-top: 227px;
+  padding-left: 190px;
+}
+
+.my-image {
+  position: absolute;
+  top: 235px;
+  left: 100px;
+  width: 60px;
+  height: 60px;
+}
+
+.index .right-section {
+  display: flex;
+  align-items: center;
+}
+
+.index .right-section .links .button {
+  display: flex;
+  align-items: center;
+  margin-right: 250px;
+}
+
+.logo {
+  position: absolute;
+  top: -65px;
+  left: -67px;
+  width: 375px;
+  height: 375px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.links a {
+  text-decoration: none;
+  color: rgb(247, 245, 245);
+  margin-left: 20px;
+  font-size: 25px;
+}
+
+.button-login {
+  position: absolute;
+  top: 110px;
+  left: 790px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 25px;
+  color: rgb(255, 255, 255);
+  width: 174px;
+  height: 46px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.button-login:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
+.button-icon {
+  position: absolute;
+  top: 112px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+}
+
+.button-icon img {
+  width: 100%;
+  height: 100%;
+}
+
+.button-icon:hover {
+  opacity: 0.5;
+}
+
+.button-icon1 { left: 1000px; }
+.button-icon2 { left: 1075px; }
+.button-icon3 { left: 1140px; }
+.button-icon4 { left: 1200px; }
+
+.button-review {
+  position: absolute;
+  top: 110px;
+  left: 261px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 25px;
+  color: rgb(255, 255, 255);
+  width: 174px;
+  height: 46px;
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.button-review:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
+.button-score {
+  position: absolute;
+  top: 110px;
+  left: 480px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 25px;
+  color: rgb(255, 255, 255);
+  width: 174px;
+  height: 46px;
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.button-score:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
+.button-product {
+  position: absolute;
+  top: 110px;
+  left: 700px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 25px;
+  color: rgb(255, 255, 255);
+  width: 174px;
+  height: 46px;
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.button-product:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
+.button-icon5 {
+  position: absolute;
+  top: 112px;
+  left: 935px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 44px; /* ขนาดของปุ่ม */
+  height: 44px;
+}
+
+.button-icon5 img {
+  width: 100%;
+  height: 100%;
+}
+
+.button-icon5:hover {
+  opacity: 0.5;
+}
+
+
+  .product-list {
+    position: absolute;
+    top: 320px;
+    left: 170px;
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping to the next line if needed */
+    justify-content: center; /* Center align items horizontally */
+    gap: 0px; /* Space between cards */
+    flex-wrap: wrap; /* ให้การ์ดห่อไปที่บรรทัดถัดไปเมื่อเต็ม */
+    justify-content: flex-start; 
+
+  }
+  
+  .card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; /* Prevent cards from wrapping to the next line */
+    overflow-x: auto; /* Allows horizontal scrolling if there are too many cards */
+
+  }
+  
+
+  .pagination-container {
+    display: flex;
+    justify-content: center; /* จัดกลางแนวนอน */
+    margin-top: 1000px; /* ระยะห่างจากด้านบน */
+  }
+  
+
+  .product-list .ant-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .product-list .ant-card-meta {
+    margin-top: auto;
+  }
+  
+  .product-list .ant-card-meta-title {
+    font-weight: bold;
+  }

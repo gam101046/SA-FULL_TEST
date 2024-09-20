@@ -1,0 +1,53 @@
+.card-profile{
+  background-color: #e2dfdf;
+  margin-top: 5vh;
+}
+  
+.back-arrow {
+  position: absolute;
+  margin-top: -15vh;
+  margin-left: 55vh;
+  cursor: pointer;
+}
+
+.profile{
+  margin-top: -10vh;
+}
+  
+.images-logo-profile {
+  margin-top: -1vh;
+  margin-left: -2vh;
+}
+
+.profilepic{
+  margin-left: -45vh;
+}
+  
+.groupinfo{
+  margin-left: 35vh;
+  margin-top: -35vh;
+}
+
+.edit-imf-button{
+  margin-right: 5vh;
+  background-color: #ffa24c;
+  color: #000000;
+
+}
+
+.edit-imf-button.ant-btn:hover{
+  background-color: #ff8c1a !important;
+  border-color: #ff8c1a !important;
+  color: #000000 !important;
+
+}
+
+.logoutprofile-button{
+  background-color: #444;
+  margin-left: 5vh;
+}
+
+.logoutprofile-button.ant-btn:hover{
+  background-color: #333 !important;
+  border-color: #333 !important;
+}

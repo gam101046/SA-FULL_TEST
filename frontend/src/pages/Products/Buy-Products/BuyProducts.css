@@ -1,0 +1,401 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  width: 100%;
+  height: auto;
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+
+}
+
+.Buyproducts {
+    position: absolute;
+    top: 0px;
+    left: 68px;
+    width: 1302px;
+    height: 820px;
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    justify-content: space-between;
+    border-radius: 20px;
+    z-index: 0;
+  }
+  .Buyproducts h1 {
+    position: absolute;
+    color: rgba(0, 0, 0, 0.624);
+    font-size: 28px;
+    font-weight: Normal ;
+    padding-top: 205px;
+    padding-left: 577px;
+
+  }
+  .Buyproducts h2 {
+    position: absolute;
+    color: #FB7743;
+    font-size: 50px;
+    font-weight: Normal ;
+    padding-top: 460px;
+    padding-left: 577px;
+  }
+  .Buyproducts h3 {
+    position: absolute;
+    color: rgba(0, 0, 0, 0.624);
+    font-size: 28px;
+    font-weight: Normal ;
+    padding-top: 560px;
+    padding-left: 577px;
+  }
+  .rectangle {
+    position: absolute;
+    top: 270px;
+    left: 550px;
+    width: 719px;
+    height: 200px;
+    background-color: #f4f4f4b1;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 20px;
+  }
+
+  .rectangle h1 {
+    color: rgba(0, 0, 0, 0.624);
+    font-size: 28px;
+    font-weight: Normal ;
+    padding-top: 0px;
+    padding-left: 27px;
+
+  }
+
+.navbar .right-section {
+  display: flex;
+  align-items: center;
+}
+
+
+.navbar .right-section .links .button {
+  display: flex;
+  align-items: center;
+  margin-right: 250px;
+}
+
+.logo {
+  position: absolute;
+  top: -65px;
+  left: -67px;
+  width: 375px;
+  height: 375px;
+  margin-top: px;
+}
+
+
+.profile {
+  width: 90px;
+}
+
+
+.links {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+
+.links a {
+  text-decoration: none;
+  color: rgb(247, 245, 245);
+  margin-left: 20px;
+  font-size: 25px;
+}
+
+  .Buyproducts-search input {
+    position: absolute;
+    top: 100px;
+    left: 270px;
+    padding-left: 10px;
+    margin-right: 300px;
+    width: 436px;
+    height: 49px;
+    border-radius: 28px;
+    background-image: url('/Users/gam/sa-67-song_thor_sut/frontend/public/search-286.png');
+    background-repeat: no-repeat;
+    background-position: 390px center;
+    background-size: 30px;
+    font-size: 20px;
+  }
+  
+  .search input::placeholder {
+    color: #aaa;
+  }
+
+.button-login{
+    position: absolute;
+    top: 110px;
+    left: 790px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 25px;
+    color: rgb(255, 255, 255);
+    width: 174px;
+    height: 46px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.button-login:hover{
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+
+
+.button-icon {
+    position: absolute;
+    top: 112px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 44px; /* ขนาดของปุ่ม */
+    height: 44px;
+  }
+  
+  .button-icon img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .button-icon:hover {
+    opacity: 0.5;
+  }
+  
+
+  .button-icon1 { left: 1000px; }
+  .button-icon2 { left: 1075px; }
+  .button-icon3 { left: 1140px; }
+  .button-icon4 { left: 1200px; }
+
+  
+  .frame-1 {
+    position: absolute;
+    top: 245px;
+    left: 80px;
+    width: 320px;
+    height: 396px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Hide any overflow from the image */
+
+  }
+  
+  .Bag {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* or contain, depending on your needs */
+    border-radius: 20px;
+    z-index: -10;
+  }
+  
+
+    
+  .arrow-icon {
+    position: absolute;
+    top: 430px;
+    left: 416px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .arrow-icon:hover {
+    opacity: 0.5;
+  }
+  
+  .arrow-icon1 {
+    position: absolute;
+    top: 430px;
+    left: 20px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .arrow-icon1:hover {
+    opacity: 0.5;
+  }
+
+  .icon-plus {
+    position: absolute;
+    top: 599px;
+    left: 788px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .icon-plus:hover {
+    opacity: 0.5;
+  }
+  
+  .icon-minus {
+    position: absolute;
+    top: 599px;
+    left: 685px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .icon-minus:hover {
+    opacity: 0.5;
+  }
+  
+  .quantity-control {
+    position: absolute;
+    top: 590px;
+    left: 723px;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    width: 55px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+  .quantity {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+  }
+  
+
+  .basket{
+    position: absolute;
+    top: 682px;
+    left: 565px;
+    background-color: #F3D745;
+    border-radius: 25px;
+    color: rgb(255, 255, 255);
+    width: 174px;
+    height: 46px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.basket:hover{
+    background-color: rgb(0, 0, 0);
+}
+
+
+.Buy-products{
+    position: absolute;
+    top: 682px;
+    left: 820px;
+    background-color: #FC8352;
+    border-radius: 25px;
+    color: rgb(255, 255, 255);
+    width: 160px;
+    height: 46px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.Buy-products:hover{
+    background-color: rgb(0, 0, 0);
+}
+.Chat{
+    position: absolute;
+    top: 682px;
+    left: 1075px;
+    background-color: #3B873E;
+    border-radius: 25px;
+    color: rgb(255, 255, 255);
+    width: 174px;
+    height: 46px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.Chat:hover{
+    background-color: rgb(0, 0, 0);
+}
+
+
+.custom-modal {
+  position: fixed; /* ให้ modal อยู่บนสุด */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(8, 6, 6, 0.5); /* พื้นหลังโปร่งแสง */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2; /* ให้ modal อยู่ด้านบนสุดของหน้า */
+}
+
+.modal-content {
+  background-color: #ffffff; /* พื้นหลังของ modal */
+  padding: 20px; /* ขอบเขตของเนื้อหา */
+  border-radius: 10px; /* มุมโค้งมน */
+  height: 200px;
+  width: 400px; /* ความกว้างของ modal */
+  text-align: center; /* จัดตำแหน่งข้อความตรงกลาง */
+}
+
+.modal-actions {
+  margin-top: 80px; /* ระยะห่างจากเนื้อหา */
+}
+
+.modal-actions button {
+  margin: 0 35px; /* ระยะห่างระหว่างปุ่ม */
+}
+
+.modal-content p {
+  font-size: 30px;
+}
+
+.modal-actions button {
+  width: 110px; /* กำหนดความกว้างของปุ่ม */
+  height: 50px; /* กำหนดความสูงของปุ่ม */
+  font-size: 20px; /* ขนาดฟอนต์ของข้อความในปุ่ม */
+  border-radius: 10px; /* มุมโค้งมน */
+}
+
+.modal-actions .cancel-button {
+  background-color: #f44336; /* สีพื้นหลังของปุ่มยกเลิก */
+  color: #fff; /* สีข้อความของปุ่มยกเลิก */
+}
+
+.modal-actions .confirm-button {
+  background-color: #4caf50; /* สีพื้นหลังของปุ่มยืนยัน */
+  color: #fff; /* สีข้อความของปุ่มยืนยัน */
+}
+
+
+.list-container {
+  position: relative; /* ใช้สำหรับให้เมนูจัดตำแหน่งสัมพันธ์กับปุ่ม */
+  display: inline-block; /* แสดงปุ่มและเมนูในบรรทัดเดียวกัน */
+}
+
+.list-menu {
+  display: none; /* ซ่อนเมนูเริ่มต้น */
+  position: absolute; /* จัดตำแหน่งเมนูให้แสดงขึ้นตามปุ่ม */
+  background-color: white; /* พื้นหลังสีขาว */
+  border: 1px solid #ccc; /* เส้นขอบ */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* เงา */
+  z-index: 10; /* ให้เมนูอยู่ด้านบน */
+  padding: 10px;
+  width: 140px;
+  height: 100px;
+  border-radius: 20px;
+}
+
+.list-container:hover .list-menu {
+  display: block; /* แสดงเมนูเมื่อชี้เมาส์ */
+}
