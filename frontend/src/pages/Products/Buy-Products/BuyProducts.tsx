@@ -1,13 +1,13 @@
-import { ArrowCircleLeft, ArrowCircleRight, Minus, Plus } from "phosphor-react";
+import {  Minus, Plus } from "phosphor-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"; // เพิ่ม useParams
 import { CreateOrder, CreateProductsOrder, GetProductsById } from '../../../services/http/index';
 import "./BuyProducts.css";
-import Logo from "/Users/gam/sa-67-song_thor_sut/frontend/public/4-Photoroom.png";
-import Back from "/Users/gam/sa-67-song_thor_sut/frontend/public/back.png";
-import List from "/Users/gam/sa-67-song_thor_sut/frontend/public/list.png";
-import Notification from "/Users/gam/sa-67-song_thor_sut/frontend/public/notifications-button.png";
-import ShoppingCartIcon from "/Users/gam/sa-67-song_thor_sut/frontend/public/shopping-cart.png";
+import Logo from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/logo.png";
+import Back from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/back-arrow.png";
+import List from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/list.png";
+import Notification from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/notifications-button.png";
+import ShoppingCartIcon from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/shopping-cart.png";
 
 interface Products {
   Title: string;

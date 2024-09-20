@@ -4,13 +4,14 @@ import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DeleteOrder, GetOrdersByProductIDAndSellerID, GetProductsBySellerId ,GetMemberById} from "../../../services/http/index";
-import "./Index.css";
-import Logo from "/Users/gam/sa-67-song_thor_sut/frontend/public/4-Photoroom.png";
-import Back from "/Users/gam/sa-67-song_thor_sut/frontend/public/back.png";
-import Chat from "/Users/gam/sa-67-song_thor_sut/frontend/public/chat.png";
-import List from "/Users/gam/sa-67-song_thor_sut/frontend/public/list.png";
-import Notification from "/Users/gam/sa-67-song_thor_sut/frontend/public/notifications-button.png";
-import ShoppingCartIcon from "/Users/gam/sa-67-song_thor_sut/frontend/public/shopping-cart.png";
+import "./PurchaseList.css";
+import Chat from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/chat.png";
+import Logo from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/logo.png";
+import Back from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/back-arrow.png";
+import List from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/list.png";
+import Notification from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/notifications-button.png";
+import ShoppingCartIcon from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/shopping-cart.png";
+
 
 interface Product {
   ID: number;

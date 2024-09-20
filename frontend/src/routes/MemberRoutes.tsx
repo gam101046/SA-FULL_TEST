@@ -7,6 +7,7 @@ import Profile from "../pages/authentication/Member/Profile";
 import MyProducts from "../pages/Products/MyProducts/MyProducts";
 import Buyproduct from "../pages/Products/Buy-Products/BuyProducts";
 import  Order  from "../pages/Products/Orders/Orders";
+import FullLayout from "../Layout/FullLayout";
 // import ApplyToSeller from "../pages/Products/ApplyToSeller/ApplyToSeller";
 
 
