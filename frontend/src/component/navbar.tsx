@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className='navbar'>
-      <img src={Logo} className='logo' alt='Course Logo' />
+      <img src={Logo} className='logo-navbar' alt='Course Logo' />
       <div className='right-section'>
         <div className='links'>
-          <div className="search">
+          <div className="navbar-search">
             <input type="text" placeholder="search"/>
           </div>
             <Link to='/Login'>
-              <button className="button-login">LOG IN</button>
+              <button className="button-login-navbar">LOG IN</button>
             </Link>
             <Link to='/SignupPage'>
               <button className="button-sign-up">SIGN UP</button>

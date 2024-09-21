@@ -3,7 +3,7 @@ import './ProfileEdit.css';
 import logo from '../../../../assets/LogoOrange.png';
 import { Button, Form, Input, message, Divider, Upload } from "antd";
 import { MemberInterface } from "../../../../interfaces/Member";
-import { GetMemberById, UpdateMemberById } from "../../../../services/https/index";
+import { GetMemberById, UpdateMemberById } from ".././../../../services/http";
 import { useNavigate, Link } from "react-router-dom";
 import ImgCrop from "antd-img-crop";
 import type { GetProp, UploadFile, UploadProps } from "antd";

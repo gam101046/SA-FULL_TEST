@@ -1,6 +1,8 @@
 .card-login{
   background-color: #e2dfdf;
-  margin-top: 5vh;
+  position: absolute;
+  left: 450px;
+  top: 100px;
   height: 500px;
 }
 
@@ -26,3 +28,4 @@
 .signup-now{
   margin-top: 5vh;
 }
+

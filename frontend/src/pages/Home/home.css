@@ -1,5 +1,7 @@
 .home-main-page{
-  background: white;
+  width: 100vw;
+  height: 100vw;
+  background-color: rgb(255, 255, 255);
 }
 
 .banner-section img {
@@ -111,7 +113,7 @@
 }
 
 .search-input {
-  padding-left: 30px; 
+  padding-left: 30px;
   margin-right: 300px;
   width: 400px;
   height: 30px;
@@ -153,4 +155,30 @@
 .signup-button:hover {
   background-color: rgb(42, 142, 242);
   color: white;
+}
+
+.products {
+  position: absolute;
+  left: 40px;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr ;
+  place-items: center;
+}
+
+
+.product .description .name-pro{
+  font-size: 18px;
+  color: #003459;
+}
+
+.product .description .money-color{
+  margin-bottom: 40px;
+}
+
+/*ส่วนเสริม*/
+.product:hover {
+  transition: 0.3s ease-in;
+  cursor: pointer;
 }

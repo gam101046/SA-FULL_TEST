@@ -194,7 +194,7 @@ const Index: React.FC = () => {
   };
 
   return (
-    <div className="index">
+    <div className="card">
       {contextHolder}
       <h1>รายการคำสั่งซื้อ</h1>
       <Table

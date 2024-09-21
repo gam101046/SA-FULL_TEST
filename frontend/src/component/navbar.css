@@ -28,7 +28,7 @@
   margin-right: 250px;
 }
 
-.logo {
+.logo-navbar {
   width: 240px;
   margin-top: 12px;
 }
@@ -53,29 +53,27 @@
   font-size: 25px;
 }
 
-.search {
-  margin-right: 120px; 
+.navbar-search {
+  margin-right: 220px;
   display: flex;
   align-items: center;
   border-radius: 25px;
 }
 
-.search input {
+.navbar-search input {
   border-radius: 60px;
-  border: 3.5px solid #ccc; 
+  border: 3.5px solid #ccc;
   padding: 20px; 
   margin-top: "";
   width: 600px;
   height: 0px;
-
-
 }
 
 .search input::placeholder {
   color: #aaa; 
 }
 
-.button-login{
+.button-login-navbar{
     background-color: white;
     border-radius: 25px;
     color: black;
@@ -95,7 +93,7 @@
     font-weight: bold;
 }
 
-.button-login:hover{
+.button-login-navbar:hover{
     background-color: rgb(0, 0, 0) !important;
     color: white !important;
 }

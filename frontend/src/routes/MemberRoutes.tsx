@@ -7,6 +7,7 @@ import Profile from "../pages/authentication/Member/Profile";
 import MyProducts from "../pages/Products/MyProducts/MyProducts";
 import Buyproduct from "../pages/Products/Buy-Products/BuyProducts";
 import  Order  from "../pages/Products/Orders/Orders";
+import PurchaseList from "../pages/Products/Purchase-list/PurchaseList"
 import FullLayout from "../Layout/FullLayout";
 import ChatBuyer from "../pages/Chat/MemberChat/ChatBuyer"
 import ChatSeller from "../pages/Chat/SellerChat/ChatSeller"
@@ -70,6 +71,10 @@ const MemberRoutes = (isLoggedIn: boolean): RouteObject[] => {
     },
     {
       path: "/MyOrder",
+      element: <PurchaseList />,
+    },
+    {
+      path: "/Card",
       element: <Order />,
     },
     {

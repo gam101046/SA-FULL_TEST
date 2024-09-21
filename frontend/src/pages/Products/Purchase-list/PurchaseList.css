@@ -1,26 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-body {
-  width: 1440px;
-  height: 800px;
-  padding: 0%;
-  margin: 0%;
-  box-sizing: border-box;
-  display: flex;
+
+.card {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    z-index: 0;
 }
 
-.index {
+.card h1 {
   position: absolute;
-  top: 0px;
-  left: 68px;
-  width: 1302px;
-  height: 800px;
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-  border-radius: 20px;
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  font-weight: Normal ;
+  padding-top: 227px;
+  padding-left: 118px;
 }
-.index h2 {
+
+.card h2 {
   position: absolute;
   color: rgb(0, 0, 0);
   font-size: 30px;

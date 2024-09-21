@@ -1,24 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-body {
-  width: 100%;
-  height: auto;
-    padding: 0%;
-    margin: 0%;
-    box-sizing: border-box;
 
-}
 
 .Buyproducts {
-    position: absolute;
-    top: 0px;
-    left: 68px;
-    width: 1302px;
-    height: 820px;
-    background-color: rgba(255, 255, 255, 0);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
-    border-radius: 20px;
     z-index: 0;
   }
   .Buyproducts h1 {
@@ -117,7 +106,7 @@ body {
     width: 436px;
     height: 49px;
     border-radius: 28px;
-    background-image: url('/Users/gam/sa-67-song_thor_sut/frontend/public/search-286.png');
+    background-image: url("/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/search-286.png");
     background-repeat: no-repeat;
     background-position: 390px center;
     background-size: 30px;
@@ -171,7 +160,7 @@ body {
   .button-icon1 { left: 1000px; }
   .button-icon2 { left: 1075px; }
   .button-icon3 { left: 1140px; }
-  .button-icon4 { left: 1200px; }
+  .button-icon4 { left: 1260px; }
 
   
   .frame-1 {
@@ -192,7 +181,7 @@ body {
     max-height: 100%;
     object-fit: cover; /* or contain, depending on your needs */
     border-radius: 20px;
-    z-index: -10;
+    
   }
   
 
@@ -398,4 +387,26 @@ body {
 
 .list-container:hover .list-menu {
   display: block; /* แสดงเมนูเมื่อชี้เมาส์ */
+}
+
+
+.button-icon1,
+.button-icon2,
+.button-icon3,
+.button-icon4,
+.Buyproducts h2,
+.Buyproducts h3,
+.logo,
+.Buyproducts-search input,
+.button-login,
+.quantity-control,
+.arrow-icon,
+.icon-minus,
+.icon-plus,
+.basket,
+.Buy-products,
+.Chat,
+.modal-content,
+.list-menu {
+  transform: translateX(+68px);
 }

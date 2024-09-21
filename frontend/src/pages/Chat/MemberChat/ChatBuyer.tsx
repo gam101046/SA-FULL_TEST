@@ -28,9 +28,9 @@ const Test: React.FC = () => {
   const [roomChatID, setRoomChatID] = useState<number | null>(null);
   const [selectedSellerID, setSelectedSellerID] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const MemberID = Number(localStorage.getItem("id"));
 
   const senderID = 2; // ID ของผู้ส่งข้อความ
-  const memberID = 5; // ID ของสมาชิกที่กำลังใช้งาน
 
   const onFinish = async () => {
     if (!inputMessage.trim()) {
@@ -78,7 +78,7 @@ const Test: React.FC = () => {
   const fetchChatMembers = async () => {
     setLoading(true);
     try {
-      const rooms = await RoomChatByMemberID(memberID);
+      const rooms = await RoomChatByMemberID(MemberID);
       const memberPromises = rooms.map(async (room: any) => {
         if (room.SellerID) {
           const sellerData = await GetMemberBySeller(room.SellerID);
@@ -113,7 +113,7 @@ const Test: React.FC = () => {
 
   const handleChatMemberSelect = async (sellerID: string) => {
     try {
-      const room = await GetRoomChatByMemberAndSellerID(memberID, sellerID);
+      const room = await GetRoomChatByMemberAndSellerID(MemberID, sellerID);
       if (room && room.RoomID) {
         setRoomChatID(room.RoomID);
         setSelectedSellerID(sellerID);

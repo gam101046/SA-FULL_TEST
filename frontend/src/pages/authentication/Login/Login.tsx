@@ -66,7 +66,7 @@ function LoginPage(){
               
               <Form.Item 
                 label="Email"
-                name="email" 
+                name="email"
                 rules={[{ required: true, message: "Please input your email!" },]}>
                 <Input/>
               </Form.Item>

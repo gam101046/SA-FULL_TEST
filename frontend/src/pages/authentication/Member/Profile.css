@@ -1,12 +1,13 @@
 .card-profile{
   background-color: #e2dfdf;
-  margin-top: 5vh;
+  margin-top: 15vh;
+  margin-left: 0vw;
 }
   
 .back-arrow {
   position: absolute;
   margin-top: -15vh;
-  margin-left: 55vh;
+  margin-left: 45vh;
   cursor: pointer;
 }
 
@@ -20,7 +21,7 @@
 }
 
 .profilepic{
-  margin-left: -45vh;
+  margin-left: -36vh;
 }
   
 .groupinfo{

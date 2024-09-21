@@ -54,7 +54,7 @@ const Byproduct: React.FC = () => {
   };
 
   const goToIndexPageOrder = () => {
-    navigate('/MyOrder');
+    navigate('/Card');
   };
 
   const handleBuyProduct = () => {
@@ -68,7 +68,7 @@ const Byproduct: React.FC = () => {
   const handleChatWithSeller = async () => {
     if (memberId !== null && product) {
       // สร้างห้องแชทโดยส่ง memberId และ SellerID
-      const result = await CreateRoomChat(memberId, product.SellerID);
+      const result = await CreateRoomChat(MemberID, product.SellerID);
     
       if (result) {
         // ถ้าสร้างห้องแชทสำเร็จ นำทางไปยังหน้าแชท
@@ -113,7 +113,7 @@ const Byproduct: React.FC = () => {
   }
 
   return (
-    <div className='Buyproducts'>
+      <div className='Buyproducts'>
       {/* Custom Modal */}
       {isModalVisible && (
         <div className="custom-modal">
@@ -175,7 +175,8 @@ const Byproduct: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+     </div>
+    
   );
 };
 

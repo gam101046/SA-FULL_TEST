@@ -1,5 +1,8 @@
 .card-signup{
   background-color: #e2dfdf;
+  position: absolute;
+  left: 450px;
+  top: 0px;
 }
 
 .header{

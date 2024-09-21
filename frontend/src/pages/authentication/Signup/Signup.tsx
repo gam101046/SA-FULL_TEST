@@ -1,4 +1,4 @@
-import {Button,Card,Form,Input,message,Flex,Row,Col,InputNumber,DatePicker,Select,} from "antd";
+import {Button,Card,Form,Input,message,Flex,Row,Col,} from "antd";
 
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +10,16 @@ import logo from "../../../assets/LogoOrange.png";
 
 import { Link } from "react-router-dom";
 
+import ImgCrop from "antd-img-crop"; // สำหรับครอบรูป
+
+import { PlusOutlined } from "@ant-design/icons"; // ไอคอนสำหรับอัปโหลด
+
+import type { UploadFile, UploadProps } from "antd";
+
+import { useState } from "react";
+
+import { Upload } from "antd"; 
+
 import "./Signup.css"
 
 
@@ -20,41 +30,66 @@ function SignUpPages() {
 
   const [messageApi, contextHolder] = message.useMessage();
 
+  // เก็บไฟล์รูปโปรไฟล์ที่อัปโหลด
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-  const onFinish = async (values: MemberInterface) => {
-
-    let res = await CreateMember(values);
-
-
-    if (res.status == 201) {
-
-      messageApi.open({
-
-        type: "success",
-
-        content: res.data.message,
-
-      });
-
-      setTimeout(function () {
-
-        navigate("/");
-
-      }, 2000);
-
-    } else {
-
-      messageApi.open({
-
-        type: "error",
-
-        content: res.data.error,
-
-      });
-
-    }
-
+  // ฟังก์ชันการเปลี่ยนแปลงสำหรับการอัปโหลดรูปโปรไฟล์
+  const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
   };
+
+  const onPreview = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as Blob);
+        reader.onload = () => resolve(reader.result as string);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
+   // ฟังก์ชันสำหรับการส่งข้อมูลสมาชิกพร้อมรูปโปรไฟล์
+   const onFinish = async (values: MemberInterface) => {
+    const file = fileList[0]?.originFileObj;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        const base64data = reader.result as string;
+        values.ProfilePic = base64data; // เพิ่ม base64 ของรูปโปรไฟล์ลงในข้อมูล
+
+        let res = await CreateMember(values);
+        if (res.status === 201) {
+          messageApi.open({
+            type: "success",
+            content: res.data.message,
+          });
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        } else {
+          messageApi.open({
+            type: "error",
+            content: res.data.error,
+          });
+        }
+      };
+    } else {
+      messageApi.open({
+        type: "error",
+        content: "กรุณาอัปโหลดรูปโปรไฟล์!",
+      });
+    }
+  };
+
+
+
 
 
   return (
@@ -142,6 +177,29 @@ function SignUpPages() {
                     </Form.Item>
                   </Col>
 
+                   {/* Upload Profile Image */}
+                   <center>
+                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Form.Item label="รูปประจำตัว" name="ProfilePic">
+                      <ImgCrop aspect={1}>
+                        <Upload
+                          listType="picture-card"
+                          fileList={fileList}
+                          onChange={onChange}
+                          onPreview={onPreview}
+                          beforeUpload={() => false} // ไม่อัปโหลดทันที
+                        >
+                          {fileList.length < 1 && (
+                            <div>
+                              <PlusOutlined />
+                              <div style={{ marginTop: 8 }}>อัพโหลด</div>
+                            </div>
+                          )}
+                        </Upload>
+                      </ImgCrop>
+                    </Form.Item>
+                  </Col></center>
+
 
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item>
@@ -175,5 +233,6 @@ function SignUpPages() {
   );
 
 }
+
 
 export default SignUpPages;

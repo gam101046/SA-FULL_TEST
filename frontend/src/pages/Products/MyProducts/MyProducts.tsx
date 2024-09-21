@@ -127,7 +127,7 @@ const Index: React.FC = () => {
   };
 
   return (
-    <div className="index">
+    <div className="myproducts">
       {contextHolder}
       <h1>My Products</h1>
       <Button className="button-review">รีวิว</Button>
