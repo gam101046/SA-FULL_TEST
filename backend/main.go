@@ -81,6 +81,13 @@ func main() {
 		router.POST("/message", controller.CreateMessage)
 		router.DELETE("/messages/:id",controller.DeleteMessage)
 
+		//Review
+		router.POST("/review", controller.CreateReview)
+		router.PUT("/review/:id", controller.UpdateReview)
+		router.DELETE("/review/:id", controller.DeleteReview)
+		router.GET("/review", controller.GetAllReview)
+		router.GET("/review/seller/:seller_id", controller.GetReviewsBySellerID)//เพิ่มใหม่
+
 	}
 
 	r.GET("/", func(c *gin.Context) {

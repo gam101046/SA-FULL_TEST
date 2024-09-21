@@ -169,14 +169,37 @@
 
 
 
-import { BrowserRouter as Router } from "react-router-dom";
-import ConfigRoutes from "./routes";
+// import { BrowserRouter as Router } from "react-router-dom";
+// import ConfigRoutes from "./routes";
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <Router>
+//         <ConfigRoutes/>
+//       </Router>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProductDisplay from "./pages/Review/ReviewUI/products";
+import ReviewPage from "./pages/Review/ReviewUI/ReviewPage";
+import ReviewSell from "./pages/Review/ReviewSeller/ReviewSeller";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <ConfigRoutes/>
+        <Routes>
+          <Route path="/" element={<ProductDisplay />} /> เส้นทางหลัก
+          <Route path="/not-review" element={<ProductDisplay />} /> {/* เส้นทางตัวอย่างเพิ่มเติม */}
+          <Route path="/review" element={<ReviewPage />} /> {/* เส้นทางหน้าบทวิจารณ์ */}
+          <Route path="/reviewseller" element={<ReviewSell />} /> {/* เส้นทางหน้าบทวิจารณ์สำหรับผู้ขาย */}
+        </Routes>
       </Router>
     </div>
   );

@@ -22,4 +22,6 @@ type Products struct {
 
 	ConditionID uint
 	Condition Condition `gorm:"foreignKey:ConditionID"`
+
+	Review          []Review `gorm:"foreignKey:products_id"`
 }

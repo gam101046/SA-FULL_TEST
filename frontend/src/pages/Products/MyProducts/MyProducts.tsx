@@ -154,20 +154,26 @@ const Index: React.FC = () => {
         </div>
       </div>
       <div className="product-list">
-        {products.length > 0 ? (
-          products.map(product => (
-            <Card
-              key={product.ID}
-              hoverable
-              style={{ width: 240, margin: '10px' }}
-              cover={<img alt={product.Title} src={product.PictureProduct || 'https://via.placeholder.com/240'} />}
-            >
-              <Meta title={product.Title} description={`ราคา: ${product.Price} บาท`} />
-            </Card>
-          ))
-        ) : (
-          <p>ไม่มีสินค้าที่แสดงผล</p>
-        )}
+      {products.length > 0 ? (
+            products.map(product => (
+              <Card
+                key={product.ID}
+                hoverable
+                style={{ width: 240, height: 350, margin: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+                cover={
+                  <img
+                    alt={product.Title}
+                    src={product.PictureProduct || 'https://via.placeholder.com/240'}
+                    style={{ width: '100%', height: '220px', objectFit: 'cover' }} // ปรับขนาดรูปภาพ
+                  />
+                }
+              >
+                <Meta title={product.Title} description={`ราคา: ${product.Price} บาท`} />
+              </Card>
+            ))
+          ) : (
+            <p>ไม่มีสินค้าที่แสดงผล</p>
+          )}
       </div>
     </div>
   );
