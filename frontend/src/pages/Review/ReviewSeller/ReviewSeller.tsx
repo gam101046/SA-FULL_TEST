@@ -4,7 +4,7 @@ import { Table, Spin, Alert, Button, Modal, Rate } from 'antd';
 import { ProductsInterface  } from '../../../interfaces/Products';
 import { Review } from '../../../interfaces/review';
 import { MemberInterface } from '../../../interfaces/Member'; // import interface สำหรับ Member
-import Navbarproducts from '../../../component/navbarproducts';
+import Navbarproducts from '../../../component/NavbarSellerReview';
 import './ReviewSeller.css'; // นำเข้า CSS
 
 const ReviewSell: React.FC = () => {

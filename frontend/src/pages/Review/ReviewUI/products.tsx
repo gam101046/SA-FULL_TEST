@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import StarRating from '../star/starrating';
 import { ProductsInterface } from '../../../interfaces/Products';
 import { Review } from '../../../interfaces/review';
-import Navbar from "../../../component/navbar";
+import Navbar from "../../../component/NavbarReview";
 import Re_bar from "../../../component/re_bar";
 
 const ProductDisplay: React.FC = () => {

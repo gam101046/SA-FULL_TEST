@@ -72,8 +72,8 @@ const ReviewPage: React.FC = () => {
         columns={[
           {
             title: <div style={{ textAlign: 'center' }}>Picture</div>,
-            dataIndex: 'Picture_product',
-            key: 'Picture_product',
+            dataIndex: 'PictureProduct',
+            key: 'PictureProduct',
             align: 'center',
             width: 200, // กำหนดความกว้างของคอลัมน์ที่นี่
             render: (text: string) => (
@@ -86,6 +86,12 @@ const ReviewPage: React.FC = () => {
                 }}
               />
             ),
+          },
+          {
+            title: <div style={{ textAlign: 'center' }}>Description</div>,
+            dataIndex: 'Description',
+            key: 'Description',
+            width: 800,
           },
           {
             title: <div style={{ textAlign: 'center' }}>Title</div>,
