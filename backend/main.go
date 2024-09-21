@@ -37,6 +37,7 @@ func main() {
 		router.DELETE("/seller/:id", controller.DeleteSeller)
 		router.GET("/seller/member/:member_id", controller.GetSellerByMemberId)
 		router.GET("/sellers/:seller_id/member/:member_id", controller.GetSellerIdByMemberID)
+		router.GET("/memberbyseller/:id", controller.GetMemberBySeller)
 		
 		//Order
 		router.POST("/orders", controller.CreateOrder)

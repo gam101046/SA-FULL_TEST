@@ -318,3 +318,28 @@ func GetSellerIdByMemberID(c *gin.Context) {
 
 
 
+func GetMemberBySeller(c *gin.Context) {
+    sellerID := c.Param("id") // รับ seller_id จาก URL
+
+    var seller entity.Seller   // สร้างตัวแปรเก็บข้อมูล Seller
+
+    db := config.DB()          // เชื่อมต่อกับฐานข้อมูล
+
+    // ดึงข้อมูล Seller พร้อมกับ Member ที่สัมพันธ์กัน (Preload)
+    result := db.Preload("Member").Where("id = ?", sellerID).First(&seller)
+
+    // ตรวจสอบว่าพบข้อมูล Seller หรือไม่
+    if result.Error != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Seller not found"})
+        return
+    }
+
+    // ตรวจสอบว่ามี Member ที่สัมพันธ์กันหรือไม่
+    if seller.MemberID == 0 {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Member not found"})
+        return
+    }
+
+    // ส่งข้อมูล Member กลับไปในรูปแบบ JSON
+    c.JSON(http.StatusOK, seller.Member)
+}

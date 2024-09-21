@@ -8,6 +8,8 @@ import MyProducts from "../pages/Products/MyProducts/MyProducts";
 import Buyproduct from "../pages/Products/Buy-Products/BuyProducts";
 import  Order  from "../pages/Products/Orders/Orders";
 import FullLayout from "../Layout/FullLayout";
+import ChatBuyer from "../pages/Chat/MemberChat/ChatBuyer"
+import ChatSeller from "../pages/Chat/SellerChat/ChatSeller"
 // import ApplyToSeller from "../pages/Products/ApplyToSeller/ApplyToSeller";
 
 
@@ -69,6 +71,14 @@ const MemberRoutes = (isLoggedIn: boolean): RouteObject[] => {
     {
       path: "/MyOrder",
       element: <Order />,
+    },
+    {
+      path: "/ChatBuyer",
+      element: <ChatBuyer />,
+    },
+    {
+      path: "/ChatSeller",
+      element: <ChatSeller />,
     },
     {
       path: "*",

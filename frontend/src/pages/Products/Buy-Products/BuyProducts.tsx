@@ -1,7 +1,7 @@
 import {  Minus, Plus } from "phosphor-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"; // เพิ่ม useParams
-import { CreateOrder, CreateProductsOrder, GetProductsById } from '../../../services/http/index';
+import { CreateOrder, CreateProductsOrder, GetProductsById ,CreateRoomChat} from '../../../services/http/index';
 import "./BuyProducts.css";
 import Logo from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/logo.png";
 import Back from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/back-arrow.png";
@@ -64,6 +64,19 @@ const Byproduct: React.FC = () => {
   const handleCloseModal = () => {
     setIsModalVisible(false); // Close the custom Modal without ordering
   };
+
+  const handleChatWithSeller = async () => {
+    if (memberId !== null && product) {
+      // สร้างห้องแชทโดยส่ง memberId และ SellerID
+      const result = await CreateRoomChat(memberId, product.SellerID);
+    
+      if (result) {
+        // ถ้าสร้างห้องแชทสำเร็จ นำทางไปยังหน้าแชท
+        navigate('/ChatBuyer');
+      }
+    }
+  };
+  
 
   const confirmOrder = async () => {
     if (product && memberId !== null) {
@@ -155,7 +168,7 @@ const Byproduct: React.FC = () => {
           </div>
 
           <button className="Buy-products" onClick={handleBuyProduct}>ซื้อสินค้า</button>
-          <button className="Chat">แชทกับผู้ขาย</button>
+          <button className="Chat" onClick={handleChatWithSeller}>แชทกับผู้ขาย</button>
 
           <div className="rectangle">
             <h1>{product.Description}</h1>
