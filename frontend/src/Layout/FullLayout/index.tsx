@@ -8,11 +8,14 @@ import {
   UnorderedListOutlined,
   ShopOutlined,
 } from '@ant-design/icons';
-import Navbar from '../../pages/Products/Buy-Products/BuyProducts';
-import Index from '../../pages/Products/Orders/Orders';
-import Index1 from '../../pages/Products/Purchase-list/PurchaseList';
-import Index2 from '../../pages/Products/MyProducts/MyProducts';
-import logo from '/Users/gam/sa-67-song_thor_sut/frontend/public/458749239_1453530818692848_5200534269192406191_n.png';
+import Buyproduct from '../../pages/Products/Buy-Products/BuyProducts';
+import Order from '../../pages/Products/Orders/Orders';
+import PurchaseList from '../../pages/Products/Purchase-list/PurchaseList';
+import MyProducts from '../../pages/Products/MyProducts/MyProducts';
+import logo from "../../assets/logo.png";
+import Profile from "../../pages/authentication/Member/Profile";
+import HomeMember from '../../pages/Home/Member/homemember';
+
 
 import '../../App.css';
 
@@ -23,7 +26,7 @@ type MenuItem = {
   icon?: React.ReactNode;
   children?: MenuItem[];
   label: React.ReactNode;
-  link?: string; // เพิ่ม link ที่นี่
+  link?: string;
 };
 
 function getItem(
@@ -50,12 +53,12 @@ const items: MenuItem[] = [
     children: [
       { key: '1', label: 'บัญชีของฉัน', icon: <UserOutlined />, link: '/profile' },
       { key: '2', label: 'คำสั่งซื้อของฉัน', icon: <UnorderedListOutlined />, link: '/product' },
-      { key: '3', label: 'ร้านค้าของฉัน', icon: <ShopOutlined />, link: '/Myproducts' }, // เพิ่มลิงก์ที่นี่
+      { key: '3', label: 'ร้านค้าของฉัน', icon: <ShopOutlined />, link: '/Myproducts' },
     ],
   },
 ];
 
-const FullLayout : React.FC = () => {
+const FullLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [current, setCurrent] = useState('1');
   const {
@@ -118,7 +121,7 @@ const FullLayout : React.FC = () => {
           </Menu>
           <Menu
             defaultSelectedKeys={[current]}
-            defaultOpenKeys={['sub4']} // เปลี่ยนเป็น 'sub4'
+            defaultOpenKeys={['sub4']}
             mode="inline"
             theme="dark"
             inlineCollapsed={collapsed}
@@ -134,13 +137,10 @@ const FullLayout : React.FC = () => {
                   <Menu.Item 
                     key={subItem.key} 
                     icon={subItem.icon}
-                    onClick={() => {
-                      if (subItem.link) {
-                        window.location.href = subItem.link;
-                      }
-                    }}
                   >
-                    {subItem.label}
+                    <Link to={subItem.link} onClick={() => setCurrent(subItem.key)}>
+                      {subItem.label}
+                    </Link>
                   </Menu.Item>
                 ))}
               </Menu.SubMenu>
@@ -151,10 +151,12 @@ const FullLayout : React.FC = () => {
           <Header style={{ padding: 0, background: colorBgContainer }} />
           <Content style={{ margin: '0 16px' }}>
             <Routes>
-              <Route path="/" element={<Navbar />} />
-              <Route path="/index" element={<Index1 />} />
-              <Route path="/product" element={<Index />} />
-              <Route path="/Myproducts" element={<Index2 />} />
+              <Route path="/HomeMember" element={<HomeMember />} />
+              <Route path="/BuyProduct/:id" element={<Buyproduct />} />
+              <Route path="/MyOrder" element={<PurchaseList />} />
+              <Route path="/Card" element={<Order />} />
+              <Route path="/Myproducts" element={<MyProducts />} />
+              <Route path="/profile" element={<Profile />} /> {/* อย่าลืมเพิ่มคอมโพเนนต์นี้ */}
             </Routes>
           </Content>
         </Layout>
@@ -164,4 +166,3 @@ const FullLayout : React.FC = () => {
 };
 
 export default FullLayout;
-

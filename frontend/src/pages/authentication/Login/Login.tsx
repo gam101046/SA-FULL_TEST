@@ -19,7 +19,7 @@ function LoginPage(){
     console.log(res); // เพิ่มเพื่อดูข้อมูลที่ได้รับจาก API
 
     if (res.status == 200) {
-      messageApi.success("Log-in successful"); 
+      messageApi.success("Log-in successful");
 
       localStorage.setItem("isLogin", "true"); // สถานะการเข้าสู่ระบบ
  
@@ -31,7 +31,7 @@ function LoginPage(){
 
       localStorage.setItem("id", res.data.id); // user ID
 
-      setTimeout(() => { 
+      setTimeout(() => {
 
         location.href = "/";
 
