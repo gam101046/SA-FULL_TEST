@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ShopRating from '../pages/Review/ReviewSeller/ShopRating'; // Import the ShopRating component
-import "./NavbarSellerReview.css";
-import Logo from "../assets/logo.png";
+import Back_arrow from "../assets/back-arrow.png";
 import Chat from "../assets/chat.png";
 import list from "../assets/list.png";
-import Shopping from "../assets/shopping-cart.png";
-import Back_arrow from "../assets/back-arrow.png";
+import Logo from "../assets/logo.png";
 import notifications from "../assets/notifications-button.png";
+import Shopping from "../assets/shopping-cart.png";
+import ShopRating from '../pages/Review/ReviewSeller/ShopRating'; // Import the ShopRating component
+import "./NavbarSellerReview.css";
 
 const Navbar = () => {
   const navigate = useNavigate();

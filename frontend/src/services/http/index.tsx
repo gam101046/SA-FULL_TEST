@@ -780,6 +780,24 @@ async function GetOrdersByProductIDAndSellerID(sellerId: number, productId: numb
       }
   }
 
+  async function GetProductsByTitle(title: string) {
+    try {
+      const res = await axios.get(`${apiUrl}/products/search/${title}`);
+      if (res.status === 200) {
+        return res.data.products as ProductsInterface[]; // แปลงข้อมูล response ให้เป็น array ของสินค้า
+      } else {
+        console.error(`Error fetching products: ${res.statusText}`);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error fetching products by title:", error);
+      return false;
+    }
+  }
+
+
+  
+
 
 export {
   //Member
@@ -816,6 +834,7 @@ export {
   DeleteProductsByID,
   GetProductsById,
   UpdateProducts,
+  GetProductsByTitle,
 
   GetProductsByMemberId,
   GetProductsBySellerId,

@@ -165,3 +165,20 @@ func GetProductsBySellerID(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"products": products})
 }
 
+// GET /products/search/:title
+func GetProductsByTitle(c *gin.Context) {
+    title := c.Param("title")  // รับค่าจาก URL พารามิเตอร์
+    var products []entity.Products
+
+    db := config.DB()
+
+    // ค้นหาสินค้าที่มี title คล้ายกับค่าที่รับมา โดยใช้ LIKE
+    result := db.Where("title LIKE ?", "%"+title+"%").Preload("Seller").Find(&products)
+    if result.Error != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": result.Error.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"products": products})
+}
+

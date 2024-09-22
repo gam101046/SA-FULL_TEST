@@ -29,25 +29,25 @@ const Navbar = () => {
                 marginTop:"0"
               }}
             />
-     <div className='right-section'>
-       <div className='links'>
-       <button className="button-createproduct" >
-           รีวิว
-         </button>
-         <button className="button-createproduct" >
-           คะแนนร้านค้า
-         </button>
-         <button className="button-createproduct" onClick={handleCreateProduct}>
-           เพิ่มสินค้า
-         </button>
+              <div className='right-section'>
+                <div className='links'>
+                <button className="button-createproduct" >
+                    รีวิว
+                  </button>
+                  <button className="button-createproduct" >
+                    คะแนนร้านค้า
+                  </button>
+                  <button className="button-createproduct" onClick={handleCreateProduct}>
+                    เพิ่มสินค้า
+                  </button>
 
-        <div className='imgbox'>
-            <img src={Chat} alt="Chat"/>
-            <img src={market} alt="market"/>
-            <img src={list} alt="list"/>
-            <img src={bell} alt="bell"/>
-            <img src={backarrow} alt="back" onClick={handleHomeSeller}/>
-        </div>
+                <div className='imgbox'>
+                    <img src={Chat} alt="Chat"/>
+                    <img src={market} alt="market"/>
+                    <img src={list} alt="list"/>
+                    <img src={bell} alt="bell"/>
+                    <img src={backarrow} alt="back" onClick={handleHomeSeller}/>
+                </div>
 
        </div>
      </div>
