@@ -133,7 +133,7 @@ function ProfileEdit() {
       {contextHolder}
       <div className="profileedit-container">
         <div className="profileedit-box">
-          <img src={logo} className="logo" alt="Logo" />
+          <img src={logo} className="logo-ProfileEdit" alt="Logo" />
           <h2>แก้ไขโปรไฟล์</h2>
           <Divider />
 

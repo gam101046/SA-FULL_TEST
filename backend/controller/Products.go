@@ -179,3 +179,32 @@ func GetProductsBySellerID(c *gin.Context) {
 
     c.JSON(http.StatusOK, gin.H{"products": products})
 }
+
+
+func UpdateProductsById(c *gin.Context) {
+    var product entity.Products  // Ensure this is the correct struct
+
+    ProductID := c.Param("id")
+
+    db := config.DB()
+    result := db.First(&product, ProductID)
+    if result.Error != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Product ID not found"})
+        return
+    }
+
+    if err := c.ShouldBindJSON(&product); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Bad request, unable to map payload"})
+        return
+    }
+
+    result = db.Save(&product)  // Save the updated product data
+
+    if result.Error != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update product"})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"message": "Updated successfully"})
+}
+

@@ -52,11 +52,11 @@ func main() {
 		router.GET("/products/:id", controller.GetProductsBYID)
 		router.GET("/products", controller.GetProducts)
 		router.POST("/products", controller.CreateProducts)
-		router.PATCH("/products/:id", controller.UpdateProducts)
 		router.DELETE("/products/:id", controller.DeleteProducts)
 		router.GET("/products_by_member/:member_id", controller.GetProductsByMemberID)
 		router.GET("/products/seller/:seller_id", controller.GetProductsBySellerID)
 		router.GET("/products/search/:title" ,controller.GetProductsByTitle)
+		router.PATCH("/products/:id", controller.UpdateProductsById)
 
 		//Product_Order
 		router.POST("/products_orders", controller.CreateProductsOrder)

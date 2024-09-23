@@ -346,24 +346,6 @@ async function GetSellerIdByMemberId(seller_id: number, member_id: number) {
     return res;
   }
   
-  async function GetProductsById(id: number | undefined) {
-    const requestOptions = {
-      method: "GET"
-    };
-  
-    let res = await fetch(`${apiUrl}/products/${id}`, requestOptions)
-      .then((res) => {
-        if (res.status == 200) {
-          return res.json();
-        } else {
-          return false;
-        }
-      });
-  
-    return res;
-  }
-  
-  
   async function CreateProducts(data: ProductsInterface) {
     const requestOptions = {
       method: "POST",
@@ -403,7 +385,6 @@ async function GetSellerIdByMemberId(seller_id: number, member_id: number) {
   }
 
 
-
   // Products Order Management
 
 // List all products-orders
@@ -426,26 +407,26 @@ async function GetProductsOrderById(id: number | undefined) {
   }
 }
 
-//อันที่แก้ไขใหม่ 23/ก.ย./67
-// async function GetProductsById(id: number | undefined) {
-//   const requestOptions = {
-//     method: "GET",
-//   };
 
-//   try {
-//     let res = await fetch(`${apiUrl}/products/${id}`, requestOptions);
+async function GetProductsById(id: number | undefined) {
+  const requestOptions = {
+    method: "GET",
+  };
+
+  try {
+    let res = await fetch(`${apiUrl}/products/${id}`, requestOptions);
     
-//     if (!res.ok) {
-//       const errorData = await res.json(); // รับข้อมูลข้อผิดพลาด
-//       throw new Error(errorData.message || 'Failed to fetch product');
-//     }
+    if (!res.ok) {
+      const errorData = await res.json(); // รับข้อมูลข้อผิดพลาด
+      throw new Error(errorData.message || 'Failed to fetch product');
+    }
     
-//     return await res.json();
-//   } catch (error) {
-//     console.error('Error fetching product:', error);
-//     return null; // คืนค่า null ถ้ามีข้อผิดพลาด
-//   }
-// }
+    return await res.json();
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    return null; // คืนค่า null ถ้ามีข้อผิดพลาด
+  }
+}
 
 // Create a new products-order
 async function CreateProductsOrder(data: Products_Orders) {
@@ -816,6 +797,18 @@ async function GetOrdersByProductIDAndSellerID(sellerId: number, productId: numb
     }
   }
 
+  async function UpProductsById(id: number , data: ProductsInterface) {
+
+    return await axios
+  
+    .patch(`${apiUrl}/products/${id}`, data, requestOptions)
+  
+      .then((res) => res)
+  
+      .catch((e) => e.response);
+  
+  }
+
 
   
 
@@ -856,6 +849,7 @@ export {
   GetProductsById,
   UpdateProducts,
   GetProductsByTitle,
+  UpProductsById,
 
   GetProductsByMemberId,
   GetProductsBySellerId,
