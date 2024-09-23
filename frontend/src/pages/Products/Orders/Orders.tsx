@@ -160,7 +160,7 @@ const Index: React.FC = () => {
   };
 
   const goToProductPage = () => {
-    navigate('/');
+    navigate('/HomeMember');
   };
 
   return (

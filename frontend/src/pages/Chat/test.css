@@ -214,3 +214,10 @@ body {
   .contact div {
     margin-left: 10px; /* เว้นระยะห่างระหว่างรูปโปรไฟล์กับชื่อ */
   }
+
+  .home-icon{
+    position: absolute;
+    top: 10px;
+    left: 1400px;
+    font-size: 35px;
+  }

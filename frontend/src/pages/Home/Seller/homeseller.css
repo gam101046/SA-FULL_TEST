@@ -1,6 +1,7 @@
 .homeseller{
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 120vw;
+  background-color: rgb(255, 255, 255);
 }
 
 

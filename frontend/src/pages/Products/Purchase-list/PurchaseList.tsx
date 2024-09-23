@@ -190,7 +190,7 @@ const Index: React.FC = () => {
   };
 
   const goToProductPage = () => {
-    navigate('/');
+    navigate('/HomeSeller');
   };
 
   return (

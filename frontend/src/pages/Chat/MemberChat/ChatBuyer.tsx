@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MessageInterface } from "../../../interfaces/ IMessage";
 import { CreateMessage, GetMemberBySeller, GetMessage, GetRoomChatByMemberAndSellerID, RoomChatByMemberID } from "../../../services/http/index";
 import '../test.css';
-
-
+import { HomeOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 interface MemberBySeller {
   MemberID: number;
@@ -20,6 +20,7 @@ interface MemberBySeller {
 }
 
 const Test: React.FC = () => {
+  const navigate = useNavigate();
   const [chatMembers, setChatMembers] = useState<MemberBySeller[]>([]);
   const [messages, setMessages] = useState<MessageInterface[]>([]);
   const [loading, setLoading] = useState(true);
@@ -107,6 +108,10 @@ const Test: React.FC = () => {
     }
   }, [selectedSellerID]);
 
+  const handleHome = () => {
+    navigate('/HomeMember'); // Navigate to ApplyToSeller page
+  };
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -126,6 +131,8 @@ const Test: React.FC = () => {
   };
 
   const selectedChatMember = chatMembers.find(member => member.SellerID === selectedSellerID);
+
+  
 
   return (
     <div className="container">
@@ -150,18 +157,21 @@ const Test: React.FC = () => {
       </div>
 
       <div className="chat">
-        <div className="chat-header">
-          {selectedChatMember && (
-            <>
-              <Avatar src={selectedChatMember.ProfilePic} alt="Profile" size="large" />
-              <div>{selectedChatMember.FirstName} {selectedChatMember.LastName}</div>
-            </>
-          )}
-          <div className="icons">
-            <i className="fas fa-phone"></i>
-            <i className="fas fa-video"></i>
+      <div className="chat-header">
+            <div className="home-icon">
+              <HomeOutlined onClick={handleHome}/>
+            </div>
+            {selectedChatMember && (
+              <>
+                <Avatar src={selectedChatMember.ProfilePic} alt="Profile" size="large" />
+                <div>{selectedChatMember.FirstName} {selectedChatMember.LastName}</div>
+              </>
+            )}
+            <div className="icons">
+              <i className="fas fa-phone"></i>
+              <i className="fas fa-video"></i>
+            </div>
           </div>
-        </div>
 
         <div className="chat-body">
           {messages.map((msg, index) => (
@@ -186,6 +196,7 @@ const Test: React.FC = () => {
           <Button type="primary" onClick={onFinish} style={{ marginLeft: '10px' }}>
             ส่ง
           </Button>
+          
         </div>
       </div>
     </div>

@@ -5,6 +5,8 @@ import Logo from "../assets/logo.png";
 import list from "../assets/list.png";
 import market from "../assets/shopping-cart.png";
 import bell from "../assets/bell.png";
+import Chat from "../assets/chat.png";
+
 
 const NavbarMember = () => {
   const navigate = useNavigate(); // Hook for navigation
@@ -19,6 +21,14 @@ const NavbarMember = () => {
     if (e.key === 'Enter' && Title.trim()) {
       navigate(`/search/${Title}`); // นำทางไปยัง path ที่ต้องการ
     }
+  };
+
+  const handleCreateProduct = () => {
+    navigate('/Card'); // Navigate to ApplyToSeller page
+  };
+
+  const handleChatBuyer = () => {
+    navigate('/ChatBuyer'); // Navigate to ApplyToSeller page
   };
 
   return (
@@ -47,9 +57,10 @@ const NavbarMember = () => {
             สร้างการขายสินค้า
           </button>
           <div className="box-navbarmember">
-            <img src={market} alt="market"/>
+            <img src={market} alt="market" onClick={handleCreateProduct}/>
             <img src={list} alt="list"/>
             <img src={bell} alt="bell"/>
+            <img src={Chat} alt="Chat" onClick={handleChatBuyer}/>
           </div>
         </div>
       </div>
