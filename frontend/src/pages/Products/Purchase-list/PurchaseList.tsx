@@ -156,6 +156,17 @@ const Index: React.FC = () => {
         />
       ),
     },
+    {
+      title: <div style={{ textAlign: 'center' }}>Review</div>,
+      key: 'review',
+      align: 'center',
+      width: 200,
+      render: (_, record) => (
+        <Button onClick={() => showModal(record)} type="primary" style={{ backgroundColor: '#ff8c1a', borderColor: '#ff8c1a' }}>
+          รีวิวสินค้า
+        </Button>
+      ),
+    },
   ];
   
 

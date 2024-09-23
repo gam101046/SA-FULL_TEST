@@ -1,8 +1,12 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Avatar, message, Button } from "antd";
 import { MessageInterface } from "../../../interfaces/ IMessage";
-import { CreateMessage, GetMember, GetMessage, RoomChatBySellerID, GetRoomChatByMemberAndSellerID } from "../../../services/http";
+import { CreateMessage, GetMember, GetMessage, RoomChatBySellerID, GetRoomChatByMemberAndSellerID, GetSellerByMemberId } from "../../../services/http";
 import '../test.css';
+import { SellerInterface } from '../../../interfaces/Seller';
+import { useNavigate } from 'react-router-dom';
+import { HomeOutlined } from '@ant-design/icons';
 
 interface Member {
   MemberID: number;
@@ -17,6 +21,7 @@ interface Member {
 }
 
 const Test: React.FC = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<MessageInterface[]>([]);
   const [loading, setLoading] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
@@ -26,8 +31,21 @@ const Test: React.FC = () => {
   const [chatMembers, setChatMembers] = useState<Member[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const [seller, setSeller] = useState<SellerInterface | null>(null);
+  const [sellerID, setSellerID] = useState<number | null>(null); // ตั้งค่า sellerID
+
   const senderID = 1; // ID ของผู้ส่งข้อความ
-  const sellerID = 10; // ID ของสมาชิกที่กำลังใช้งาน
+
+  // Function to fetch seller by member_id
+  const fetchSeller = async (member_id: number) => {
+    const res = await GetSellerByMemberId(member_id); // Call the function
+    if (!res.error) {
+      setSeller(res.seller); // Set the seller object
+      setSellerID(res.seller_id); // Set the seller ID
+    } else {
+      message.error(res.error); // Display error message if any
+    }
+  };
 
   const onFinish = async () => {
     if (!inputMessage.trim()) {
@@ -51,7 +69,7 @@ const Test: React.FC = () => {
       if (res) {
         messageApi.open({ type: "success", content: "บันทึกข้อความสำเร็จ" });
         setInputMessage("");
-        fetchMessages();
+        fetchMessages(); // เรียกดึงข้อความใหม่หลังจากส่งข้อความสำเร็จ
       } else {
         messageApi.open({ type: "error", content: "เกิดข้อผิดพลาด !" });
       }
@@ -72,8 +90,8 @@ const Test: React.FC = () => {
     setLoading(false);
   };
 
-
   const fetchChatMembers = async () => {
+    if (!sellerID) return; // ตรวจสอบว่า sellerID ไม่เป็น null
     setLoading(true);
     try {
       const rooms = await RoomChatBySellerID(sellerID);
@@ -83,7 +101,6 @@ const Test: React.FC = () => {
           const memberData = await GetMember(room.MemberID);
           console.log('Member Data:', memberData); // ตรวจสอบว่าข้อมูลสมาชิกที่ได้ถูกต้องหรือไม่
           if (memberData) {
-            // ตรวจสอบว่า memberData เป็น array หรือ object
             return Array.isArray(memberData) ? { ...memberData[0], MemberID: room.MemberID } : { ...memberData, MemberID: room.MemberID };
           }
         }
@@ -99,12 +116,21 @@ const Test: React.FC = () => {
   };
   
   useEffect(() => {
-    fetchChatMembers();
+    const memberId = Number(localStorage.getItem("id")); // Assuming member_id is stored in localStorage
+    if (memberId) {
+      fetchSeller(memberId); // Fetch seller using the member ID
+    }
   }, []);
 
   useEffect(() => {
+    if (sellerID) {
+      fetchChatMembers(); // ดึงรายชื่อคนที่เคยแชทด้วยเมื่อ sellerID เปลี่ยนแปลง
+    }
+  }, [sellerID]);
+
+  useEffect(() => {
     if (selectedSellerID) {
-      fetchMessages();
+      fetchMessages(); // ดึงข้อความเมื่อมีการเลือกผู้ใช้ที่ต้องการแชทด้วย
     }
   }, [selectedSellerID]);
 
@@ -114,6 +140,7 @@ const Test: React.FC = () => {
 
   const handleChatMemberSelect = async (memberID: number) => {
     try {
+      if (!sellerID) return; // ตรวจสอบว่า sellerID ไม่เป็น null ก่อนที่จะเรียก API
       const room = await GetRoomChatByMemberAndSellerID(memberID, sellerID);
       if (room && room.RoomID) {
         setRoomChatID(room.RoomID);
@@ -126,11 +153,15 @@ const Test: React.FC = () => {
     }
   };
 
+  const handleHome = () => {
+    navigate('/HomeSeller');
+  };
+
   const selectedChatMember = chatMembers.find(member => member.MemberID === selectedSellerID);
 
   return (
     <div className="container">
-      {contextHolder}
+      {/* {contextHolder} */}
       <div className="sidebar">
         <input type="text" placeholder="ค้นหา (3K)" />
         {chatMembers.length > 0 ? (
@@ -154,6 +185,9 @@ const Test: React.FC = () => {
 
       <div className="chat">
         <div className="chat-header">
+        <div className="home-icon">
+               <HomeOutlined onClick={handleHome}/>
+             </div>
           {selectedChatMember && (
             <>
               <Avatar src={selectedChatMember.ProfilePic} alt="Profile" size="large" />

@@ -1,9 +1,7 @@
-
-
 import { Button, Card, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetProducts } from "../../../services/http/index";
+import { GetProductsBySellerId, GetSellerByMemberId } from "../../../services/http/index";
 import "./MyProducts.css";
 import Logo from "../../../assets/logo.png";
 import Back from "../../../assets/back-arrow.png";
@@ -11,6 +9,7 @@ import Chat from "../../../assets/chat.png";
 import List from "../../../assets/list.png";
 import Notification from "../../../assets/notifications-button.png";
 import ShoppingCartIcon from "../../../assets/shopping-cart.png";
+import { SellerInterface } from "../../../interfaces/Seller";
 
 const { Meta } = Card;
 
@@ -26,49 +25,69 @@ interface Products {
 
 const Index: React.FC = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState<Products[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
 
-  // Function to fetch products
-  const fetchProducts = async () => {
-    try {
-      const result = await GetProducts(); // Fetch all products
-      console.log('API result:', result); // ตรวจสอบผลลัพธ์ที่ได้จาก API
-      if (Array.isArray(result)) {
-        setProducts(result); // ตั้งค่าข้อมูลสินค้าเป็นอาร์เรย์ที่ได้รับ
-      } else {
-        console.error('Data format is incorrect:', result);
-        messageApi.open({
-          type: "error",
-          content: "ข้อมูลที่ได้รับจาก API ไม่ถูกต้อง",
-        });
-      }
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      messageApi.open({
-        type: "error",
-        content: "เกิดข้อผิดพลาดในการดึงข้อมูลสินค้า",
-      });
+  // Seller state
+  const [seller, setSeller] = useState<SellerInterface | null>(null);
+  const [sellerId, setSellerId] = useState<number | null>(null);
+  const [products, setProducts] = useState<Products[]>([]);
+
+
+
+  // Fetch products by seller ID
+  const fetchProductsBySellerId = async (sellerId: number) => {
+    const res = await GetProductsBySellerId(sellerId, 1, 10); // Assuming page 1 and 10 products per page
+    if (res) {
+      setProducts(res.products); // Set the products
+    } else {
+      messageApi.error("Error fetching products for seller");
     }
   };
-  
 
+
+  // Function to fetch seller by member_id
+  const fetchSeller = async (member_id: number) => {
+    const res = await GetSellerByMemberId(member_id); // Call the function
+    if (!res.error) {
+      setSeller(res.seller); // Set the seller object
+      setSellerId(res.seller_id); // Set the seller ID
+      fetchProductsBySellerId(res.seller_id); // Fetch products for this seller
+    } else {
+      message.error(res.error); // Display error message if any
+    }
+    console.log("Form values:", res);
+  };
+
+  // Fetch the seller when the component mounts or the member_id changes
   useEffect(() => {
-    fetchProducts();
+    const memberId = Number(localStorage.getItem("id")); // Assuming member_id is stored in localStorage
+    if (memberId) {
+      fetchSeller(memberId); // Fetch seller using the member ID
+    }
   }, []);
 
   const goToProductPage = () => {
     navigate('/HomeSeller');
   };
 
+  const goToCreateProduct = () => {
+    navigate('/createproducts');
+  };
+
+  const handleToEditProduct = (id: number) => {
+    // When clicking on a product, navigate to /EditProducts with the product ID
+    navigate(`/EditProducts/${id}`);
+  };
+
+
   return (
     <div className="myproducts">
       {contextHolder}
       <h1>My Products</h1>
-      <Button className="button-review">รีวิว</Button>
-      <Button className="button-score">คะแนนร้านค้า</Button>
-      <Button className="button-product">เพิ่มสินค้า</Button>
-      <Button className='button-icon button-icon5'>
+      <Button className="button-review1">รีวิว</Button>
+      <Button className="button-score2">คะแนนร้านค้า</Button>
+      <Button className="button-product3">เพิ่มสินค้า</Button>
+      <Button className='button-icon button-icon0'>
         <img src={Chat} alt='Chat' />
       </Button>
       <img src={Logo} className="logo" alt="Course Logo" />
@@ -99,9 +118,10 @@ const Index: React.FC = () => {
                   <img
                     alt={product.Title}
                     src={product.PictureProduct || 'https://via.placeholder.com/240'}
-                    style={{ width: '100%', height: '220px', objectFit: 'cover' }} // ปรับขนาดรูปภาพ
+                    style={{ width: '100%', height: '210px', objectFit: 'cover' }} // ปรับขนาดรูปภาพ
                   />
                 }
+                onClick={() => handleToEditProduct(product.ID)} // Navigate to product edit page
               >
                 <Meta title={product.Title} description={`ราคา: ${product.Price} บาท`} />
               </Card>
@@ -115,3 +135,8 @@ const Index: React.FC = () => {
 };
 
 export default Index;
+
+
+
+
+  

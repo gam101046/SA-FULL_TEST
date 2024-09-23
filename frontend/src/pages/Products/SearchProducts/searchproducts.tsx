@@ -51,14 +51,14 @@ const Index: React.FC = () => {
     }
   };
 
-  const handleProductClick = (id: number) => {
-    navigate(`/BuyProduct/${id}`);
-  };
-
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       navigate(`/search/${searchTitle}`); 
     }
+  };
+
+  const handleProductClick = (id: number) => {
+    navigate(`/BuyProduct/${id}`);
   };
 
   const goToProductPage = () => {

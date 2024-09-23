@@ -24,6 +24,7 @@ const Byproduct: React.FC = () => {
   const navigate = useNavigate();
   const [memberId, setMemberId] = useState<number | null>(null);
   const MemberID = Number(localStorage.getItem("id"));
+  const [Title, setSearchTitle] = useState<string>(""); 
 
   const { id } = useParams<{ id: string }>(); // ใช้ useParams เพื่อรับ productId จาก path
   const productId = Number(id); // แปลงค่า id เป็นตัวเลข
@@ -49,6 +50,12 @@ const Byproduct: React.FC = () => {
     }
   };
 
+  const handleSearch = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && Title.trim()) {
+      navigate(`/search/${Title}`); // นำทางไปยัง path ที่ต้องการ
+    }
+  };
+
   const goToIndexPage = () => {
     navigate('/HomeMember');
   };
@@ -67,12 +74,22 @@ const Byproduct: React.FC = () => {
 
   const handleChatWithSeller = async () => {
     if (memberId !== null && product) {
-      // สร้างห้องแชทโดยส่ง memberId และ SellerID
+      // เช็คว่ามี memberId และ product หรือไม่
+      // ถ้ามี จะทำการสร้างห้องแชทโดยส่ง MemberID และ SellerID
       const result = await CreateRoomChat(MemberID, product.SellerID);
-    
+      
+      // ตรวจสอบผลลัพธ์จากการสร้างห้องแชท
       if (result) {
-        // ถ้าสร้างห้องแชทสำเร็จ นำทางไปยังหน้าแชท
-        navigate('/ChatBuyer');
+        if (result.message === "Room already exists") {
+          // ถ้าห้องแชทมีอยู่แล้ว นำทางไปยังหน้า ChatBuyer
+          navigate('/ChatBuyer');
+        } else {
+          // ถ้าสร้างห้องแชทสำเร็จ จะนำทางไปยังหน้า ChatBuyer
+          navigate('/ChatBuyer');
+        }
+      } else {
+        // ถ้ามีข้อผิดพลาด จะตั้งค่าข้อความข้อผิดพลาด
+        setErrorMessage(result.message || "เกิดข้อผิดพลาดในการสร้างห้องแชท");
       }
     }
   };
@@ -136,7 +153,13 @@ const Byproduct: React.FC = () => {
       <div className='right-section'>
         <div className='links'>
           <div className="Buyproducts-search">
-            <input type="text" placeholder="search" />
+          <input
+              type="text"
+              placeholder="ค้นหา"
+              value={Title}
+              onChange={(e) => setSearchTitle(e.target.value)} // อัปเดตคำค้นหา
+              onKeyPress={handleSearch} // เรียกใช้ฟังก์ชันเมื่อกด Enter
+            />
           </div>
           <button className="button-login">สร้างการขาย</button>
 
@@ -181,3 +204,7 @@ const Byproduct: React.FC = () => {
 };
 
 export default Byproduct;
+function setErrorMessage(arg0: any) {
+  throw new Error("Function not implemented.");
+}
+

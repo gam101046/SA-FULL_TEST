@@ -3,17 +3,17 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import './re_bar.css';
 
 const Navbar = () => {
-  const [active, setActive] = useState('not-review');
+  const [active, setActive] = useState('Review');
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     // ตั้งค่า active ตาม URL
     const path = location.pathname.split('/')[1]; // แยก path และเลือกส่วนแรก
-    if (path === 'review') {
-      setActive('review');
+    if (path === 'ReviewPage') {
+      setActive('ReviewPage');
     } else {
-      setActive('not-review');
+      setActive('Review');
     }
   }, [location]);
 
@@ -24,17 +24,17 @@ const Navbar = () => {
 
   return (
     <div className="nav">
-      <div className="text">
+      <div className="text-re_bar">
         <p
-          onClick={() => handleClick('not-review')}
-          className={active === 'not-review' ? 'active' : ''}
+          onClick={() => handleClick('Review')}
+          className={active === 'Review' ? 'active' : ''}
         >
           ยังไม่ได้รีวิว
         </p>
         <div className="divider"></div>
         <p
-          onClick={() => handleClick('review')}
-          className={active === 'review' ? 'active' : ''}
+          onClick={() => handleClick('ReviewPage')}
+          className={active === 'ReviewPage' ? 'active' : ''}
         >
           รีวิวแล้ว
         </p>

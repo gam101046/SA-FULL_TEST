@@ -1,19 +1,4 @@
-/* .column-picture {
-    background-color: #e2dfdf; 
-  }
-  
-  .column-title {
-    background-color: #bcbcbc; 
-  }
-  
-  .column-price {
-    background-color: #bcbcbc; 
-  }
-  
-  .column-review {
-    background-color: #bcbcbc;
-  } */
-  /* เปลี่ยนสีพื้นหลังของหัวตาราง */
+
   .ant-table-thead > tr > th {
     background-color: #cfd1d2 !important; /* สีฟ้าอ่อน */
     color: #000; /* สีของข้อความในหัวตาราง */

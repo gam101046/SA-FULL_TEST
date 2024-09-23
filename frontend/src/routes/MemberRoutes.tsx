@@ -109,6 +109,9 @@ import PurchaseList from "../pages/Products/Purchase-list/PurchaseList";
 import LoginPage from "../pages/authentication/Login/Login";
 import Profile from "../pages/authentication/Member/Profile";
 import SearchProducts from "../pages/Products/SearchProducts/searchproducts"
+import ReviewPage from "../pages/Review/ReviewUI/ReviewPage";
+import ReviewSell from "../pages/Review/ReviewSeller/ReviewSeller";
+import ProductDisplay from "../pages/Review/ReviewUI/products";
 
 const MainPages = Loadable(lazy(() => import("../../src/pages/Home/home")));
 const HomeMember = Loadable(lazy(() => import("../pages/Home/Member/homemember")));
@@ -176,10 +179,21 @@ const MemberRoutes = (isLoggedIn: boolean): RouteObject[] => {
       element: <ChatSeller />,
     },
     {
-      path: "/search/:title", // แก้ไขจาก tital เป็น title
+      path: "/search/:title",
       element: <SearchProducts />,
     },
-    
+    {
+      path: "/ReviewPage",
+      element: <ReviewPage />,
+    },
+    {
+      path: "/ReviewSeller",
+      element: <ReviewSell />,
+    },
+    {
+      path: "/Review",
+      element: <ProductDisplay />,
+    },
     {
       path: "*",
       element: <HomeMember />,

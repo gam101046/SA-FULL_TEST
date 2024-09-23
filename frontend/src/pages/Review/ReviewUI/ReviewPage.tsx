@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Spin, Alert, Button, Modal,Rate } from 'antd';
 import { ProductsInterface } from '../../../../src/interfaces/Products';
-import Navbar from "../../../component/navbar";
+import Navbar from "../../../component/NavbarReview";
 import Re_bar from "../../../component/re_bar";
 
 interface Review {
@@ -49,7 +49,6 @@ const ReviewPage: React.FC = () => {
     setSelectedProduct(product);
     setIsModalVisible(true);
   };
-
   const handleCancel = () => {
     setIsModalVisible(false);
     setSelectedProduct(null);

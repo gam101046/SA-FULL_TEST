@@ -136,7 +136,7 @@ const ReviewSell: React.FC = () => {
         footer={null}
         className="custom-modal"
       >
-        {/* <p>{`คุณกำลังดูรีวิวสินค้า: ${selectedProduct?.Title}`}</p> */}
+        
         {reviews.length > 0 ? (
           reviews
             .filter((review) => review.ProductsID === selectedProduct?.ID)

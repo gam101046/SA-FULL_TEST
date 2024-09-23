@@ -602,26 +602,29 @@ async function GetOrdersByProductIDAndSellerID(sellerId: number, productId: numb
     return res;
   }
 
+  
   async function CreateRoomChat(memberID: number, sellerID: number): Promise<any> {
     const apiUrlWithParams = `${apiUrl}/roomchat/member/${memberID}/seller/${sellerID}`;
     const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ MemberID: memberID, SellerID: sellerID }), // ส่งข้อมูลที่จำเป็นใน body
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ MemberID: memberID, SellerID: sellerID }), // ส่งข้อมูลที่จำเป็นใน body
     };
-  
-    const res = await fetch(apiUrlWithParams, requestOptions)
-      .then((res) => {
-        if (res.status === 201) {
-          return res.json();
+
+    try {
+        const res = await fetch(apiUrlWithParams, requestOptions);
+        if (res.ok) { // ตรวจสอบว่าตอบกลับเป็น 2xx
+            return res.json();
         } else {
-          return false;
+            const errorData = await res.json(); // รับข้อมูลข้อผิดพลาด
+            console.error("Error:", errorData);
+            return { message: errorData.error || "An error occurred" }; // ส่งคืนข้อความผิดพลาด
         }
-      });
-  
-    return res;
+    } catch (error) {
+        console.error("Network error:", error);
+        return { message: "Network error occurred" }; // ส่งคืนข้อความเมื่อเกิดข้อผิดพลาดในเครือข่าย
+    }
   }
-  
   
   async function GetMessage(id:Number | undefined) {
     const requestOptions = {

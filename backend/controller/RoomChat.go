@@ -42,6 +42,14 @@ func CreateRoomChat(c *gin.Context) {
 		return
 	}
 
+	// ตรวจสอบว่ามีห้องแชทระหว่าง Member และ Seller นี้อยู่แล้วหรือไม่
+	var existingRoomChat entity.RoomChat
+	if err := db.Where("member_id = ? AND seller_id = ?", memberID, sellerID).First(&existingRoomChat).Error; err == nil {
+		// ถ้ามีห้องแชทนี้อยู่แล้ว ส่งข้อมูลห้องแชทเดิมกลับไป
+		c.JSON(http.StatusOK, gin.H{"message": "Room already exists", "data": existingRoomChat})
+		return
+	}
+
 	// สร้าง RoomChat ใหม่
 	r := entity.RoomChat{
 		MemberID: uint(memberID), // แปลงเป็น uint
@@ -49,7 +57,7 @@ func CreateRoomChat(c *gin.Context) {
 		Seller:   seller,
 	}
 
-	// บันทึก
+	// บันทึกห้องแชทใหม่
 	if err := db.Create(&r).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
