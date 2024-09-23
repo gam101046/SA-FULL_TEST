@@ -15,6 +15,7 @@ import SearchProducts from "../pages/Products/SearchProducts/searchproducts"
 import ReviewPage from "../pages/Review/ReviewUI/ReviewPage";
 import ReviewSell from "../pages/Review/ReviewSeller/ReviewSeller";
 import ProductDisplay from "../pages/Review/ReviewUI/products";
+import EditProducts from "../pages/Products/EditProducts/EditProducts";
 
 const MainPages = Loadable(lazy(() => import("../../src/pages/Home/home")));
 const HomeMember = Loadable(lazy(() => import("../pages/Home/Member/homemember")));
@@ -96,6 +97,10 @@ const MemberRoutes = (isLoggedIn: boolean): RouteObject[] => {
     {
       path: "/Review",
       element: <ProductDisplay />,
+    },
+    {
+      path: "/EditProducts/:id",
+      element: <EditProducts />,
     },
     {
       path: "*",

@@ -53,7 +53,7 @@ const Index: React.FC = () => {
       setSellerId(res.seller_id); // Set the seller ID
       fetchProductsBySellerId(res.seller_id); // Fetch products for this seller
     } else {
-      message.error(res.error); // Display error message if any
+      message.error(res.error);
     }
     console.log("Form values:", res);
   };
@@ -70,15 +70,14 @@ const Index: React.FC = () => {
     navigate('/HomeSeller');
   };
 
-  const goToCreateProduct = () => {
-    navigate('/createproducts');
-  };
-
   const handleToEditProduct = (id: number) => {
     // When clicking on a product, navigate to /EditProducts with the product ID
     navigate(`/EditProducts/${id}`);
   };
 
+  const handleCreateProduct = () => {
+    navigate('/createproducts'); // Navigate to ApplyToSeller page
+  };
 
   return (
     <div className="myproducts">
@@ -86,7 +85,7 @@ const Index: React.FC = () => {
       <h1>My Products</h1>
       <Button className="button-review1">รีวิว</Button>
       <Button className="button-score2">คะแนนร้านค้า</Button>
-      <Button className="button-product3">เพิ่มสินค้า</Button>
+      <Button className="button-product3"onClick={handleCreateProduct}>เพิ่มสินค้า</Button>
       <Button className='button-icon button-icon0'>
         <img src={Chat} alt='Chat' />
       </Button>
@@ -135,8 +134,3 @@ const Index: React.FC = () => {
 };
 
 export default Index;
-
-
-
-
-  

@@ -145,25 +145,6 @@ func GetProductsByMemberID(c *gin.Context) {
 }
 
 
-func GetProductsBySellerID(c *gin.Context) {
-    sellerID := c.Param("seller_id")
-    var products []entity.Products
-
-    db := config.DB()
-    result := db.
-        Joins("JOIN products_orders ON products_orders.product_id = products.id").
-        Joins("JOIN orders ON orders.id = products_orders.order_id").
-        Where("orders.seller_id = ?", sellerID).
-        Preload("Seller").
-        Find(&products)
-
-    if result.Error != nil {
-        c.JSON(http.StatusNotFound, gin.H{"error": result.Error.Error()})
-        return
-    }
-
-    c.JSON(http.StatusOK, gin.H{"products": products})
-}
 
 // GET /products/search/:title
 func GetProductsByTitle(c *gin.Context) {
@@ -182,3 +163,19 @@ func GetProductsByTitle(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"products": products})
 }
 
+// GET /products/seller/:seller_id
+func GetProductsBySellerID(c *gin.Context) {
+    sellerID := c.Param("seller_id")  // รับค่าจาก URL พารามิเตอร์
+    var products []entity.Products
+
+    db := config.DB()
+
+    // ค้นหาสินค้าที่มี SellerID ตรงกับค่าที่รับมา
+    result := db.Where("seller_id = ?", sellerID).Preload("Seller").Find(&products)
+    if result.Error != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": result.Error.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"products": products})
+}
