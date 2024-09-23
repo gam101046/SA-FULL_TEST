@@ -307,9 +307,6 @@ async function GetSellerIdByMemberId(seller_id: number, member_id: number) {
 
 
 
-
-
-
 //Products
   async function GetProducts() {
     const requestOptions = {
@@ -428,6 +425,27 @@ async function GetProductsOrderById(id: number | undefined) {
     return false;
   }
 }
+
+//อันที่แก้ไขใหม่ 23/ก.ย./67
+// async function GetProductsById(id: number | undefined) {
+//   const requestOptions = {
+//     method: "GET",
+//   };
+
+//   try {
+//     let res = await fetch(`${apiUrl}/products/${id}`, requestOptions);
+    
+//     if (!res.ok) {
+//       const errorData = await res.json(); // รับข้อมูลข้อผิดพลาด
+//       throw new Error(errorData.message || 'Failed to fetch product');
+//     }
+    
+//     return await res.json();
+//   } catch (error) {
+//     console.error('Error fetching product:', error);
+//     return null; // คืนค่า null ถ้ามีข้อผิดพลาด
+//   }
+// }
 
 // Create a new products-order
 async function CreateProductsOrder(data: Products_Orders) {

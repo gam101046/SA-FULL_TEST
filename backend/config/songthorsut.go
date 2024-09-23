@@ -76,15 +76,23 @@ func SetupDatabase() {
 
 	//Select หมวดหมู่
 	Category1 := entity.Category{NameCategory: "หนังสือ"}
-	Category2 := entity.Category{NameCategory: "เสื้อผ้า"}
-	Category3 := entity.Category{NameCategory: "สุขภาพและความงาม"}
+	Category2 := entity.Category{NameCategory: "อุกปรณ์การเรียน"}
+	Category3 := entity.Category{NameCategory: "รองเท้า"}
 	Category4 := entity.Category{NameCategory: "อิเล็กทรอนิกส์"}
-	Category5 := entity.Category{NameCategory: "อุปกรณ์การเรียน"}
+	Category5 := entity.Category{NameCategory: "เสื้อ"}
+	Category6 := entity.Category{NameCategory: "กระโปรง"}
+	Category7 := entity.Category{NameCategory: "กางเกง"}
+	Category8 := entity.Category{NameCategory: "อื่นๆ"}
+
 	db.FirstOrCreate(&Category1, &entity.Category{NameCategory: "หนังสือ"})
-	db.FirstOrCreate(&Category2, &entity.Category{NameCategory: "เสื้อผ้า"})
-	db.FirstOrCreate(&Category3, &entity.Category{NameCategory: "สุขภาพและความงาม"})
+	db.FirstOrCreate(&Category2, &entity.Category{NameCategory: "อุกปรณ์การเรียน"})
+	db.FirstOrCreate(&Category3, &entity.Category{NameCategory: "รองเท้า"})
 	db.FirstOrCreate(&Category4, &entity.Category{NameCategory: "อิเล็กทรอนิกส์"})
-	db.FirstOrCreate(&Category5, &entity.Category{NameCategory: "อุปกรณ์การเรียน"})
+	db.FirstOrCreate(&Category5, &entity.Category{NameCategory: "เสื้อ"})
+	db.FirstOrCreate(&Category6, &entity.Category{NameCategory: "กระโปรง"})
+	db.FirstOrCreate(&Category7, &entity.Category{NameCategory: "กางเกง"})
+	db.FirstOrCreate(&Category8, &entity.Category{NameCategory: "อื่นๆ"})
+
 
 	//Select สภาพสินค้า
 	Condition1 := entity.Condition{NameCondition: "ใหม่"}
