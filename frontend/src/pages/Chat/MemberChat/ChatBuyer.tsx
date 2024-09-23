@@ -66,9 +66,9 @@ const Test: React.FC = () => {
     }
   };
 
-  // useEffect ที่ใช้ในการเซ็ตค่า mid
+
   useEffect(() => {
-    const storedId = localStorage.getItem("id");
+    const storedId = Number(localStorage.getItem("id"));
     if (storedId) {
       setMid(Number(storedId));
     }
@@ -133,9 +133,14 @@ const Test: React.FC = () => {
   };
 
   const fetchChatMembers = async () => {
+    if (mid === null) {
+      messageApi.open({ type: "error", content: "ไม่พบ ID สมาชิก" });
+      return;
+    }
+  
     setLoading(true);
     try {
-      const rooms = await RoomChatByMemberID(mid); // ใช้ mid แทน memberID ที่ยังไม่ได้ประกาศ
+      const rooms = await RoomChatByMemberID(mid); // mid is guaranteed to be a number here
       const memberPromises = rooms.map(async (room: any) => {
         if (room.SellerID) {
           const sellerData = await GetMemberBySeller(room.SellerID);
@@ -145,7 +150,7 @@ const Test: React.FC = () => {
         }
         return null;
       });
-
+  
       const members = await Promise.all(memberPromises);
       setChatMembers(members.filter((member) => member !== null) as MemberBySeller[]);
     } catch (error) {
@@ -156,6 +161,7 @@ const Test: React.FC = () => {
     }
     setLoading(false);
   };
+  
 
   useEffect(() => {
     if (mid !== null) {
@@ -174,8 +180,13 @@ const Test: React.FC = () => {
   }, [messages]);
 
   const handleChatMemberSelect = async (sellerID: string) => {
+    if (mid === null) {
+      messageApi.open({ type: "error", content: "ไม่พบ ID สมาชิก" });
+      return;
+    }
+    const sellerIDNumber = Number(sellerID);
     try {
-      const room = await GetRoomChatByMemberAndSellerID(mid, sellerID); // ใช้ mid แทน memberID
+      const room = await GetRoomChatByMemberAndSellerID(mid, sellerIDNumber); // mid is guaranteed to be a number here
       if (room && room.RoomID) {
         setRoomChatID(room.RoomID);
         setSelectedSellerID(sellerID);
@@ -189,17 +200,29 @@ const Test: React.FC = () => {
       });
     }
   };
+  
 
   const selectedChatMember = chatMembers.find(
     (member) => member.SellerID === selectedSellerID
   );
   const handleHome = async () => {
+    if (mid === null) {
+      messageApi.open({ type: "error", content: "ไม่พบ ID สมาชิก" });
+      return;
+    }
+  
     try {
       const sellerData = await GetSellerByMemberId(mid);
-      if (sellerData) {
-        navigate('/HomeSeller'); // Navigate to seller's home page if the member is a seller
+      if (sellerData && sellerData.error) {
+        messageApi.open({
+          type: "error",
+          content: sellerData.error,
+        });
+        navigate('/HomeMember');
+      } else if (sellerData) {
+        navigate('/HomeSeller');
       } else {
-        navigate('/HomeMember'); // Otherwise, navigate to member's home page
+        navigate('/HomeMember');
       }
     } catch (error) {
       messageApi.open({
@@ -209,7 +232,7 @@ const Test: React.FC = () => {
     }
   };
   
-
+  
   return (
     <div className="container">
       {/* {contextHolder} */}
