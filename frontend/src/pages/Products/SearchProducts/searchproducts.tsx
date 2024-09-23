@@ -1,7 +1,7 @@
 import { Button, Card, Input, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { GetProductsByTitle } from "../../../services/http/index"; 
+import { GetProductsByTitle,GetSellerByMemberId } from "../../../services/http/index"; 
 import "./searchproducts.css";
 import Logo from "../../../assets/logo.png";
 import Back from "../../../assets/back-arrow.png";
@@ -27,6 +27,7 @@ const Index: React.FC = () => {
   const [products, setProducts] = useState<Products[]>([]);
   const [searchTitle, setSearchTitle] = useState<string>(title || ""); 
   const [messageApi, contextHolder] = message.useMessage();
+  const MemberID = Number(localStorage.getItem("id"));
 
   // Function to fetch products by title
   const fetchProductsByTitle = async () => {
@@ -80,6 +81,33 @@ const Index: React.FC = () => {
     }
   }, [searchTitle]);
 
+  const handleHome = async () => {
+    if (MemberID === null) {
+      messageApi.open({ type: "error", content: "ไม่พบ ID สมาชิก" });
+      return;
+    }
+  
+    try {
+      const sellerData = await GetSellerByMemberId(MemberID);
+      if (sellerData && sellerData.error) {
+        messageApi.open({
+          type: "error",
+          content: sellerData.error,
+        });
+        navigate('/HomeMember');
+      } else if (sellerData) {
+        navigate('/HomeSeller');
+      } else {
+        navigate('/HomeMember');
+      }
+    } catch (error) {
+      messageApi.open({
+        type: "error",
+        content: "เกิดข้อผิดพลาดในการดึงข้อมูลผู้ขาย",
+      });
+    }
+  };
+
   return (
     <div className="myproducts">
       {contextHolder}
@@ -107,7 +135,7 @@ const Index: React.FC = () => {
           <Button className="button-icon button-icon3">
             <img src={Notification} alt="Notification" />
           </Button>
-          <Button className="button-icon button-icon4" onClick={goToProductPage}>
+          <Button className="button-icon button-icon4" onClick={handleHome}>
             <img src={Back} alt="Back" />
           </Button>
         </div>

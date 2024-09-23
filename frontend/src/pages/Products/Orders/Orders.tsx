@@ -8,6 +8,7 @@ import {
   GetProductsByMemberId,
   GetOrdersByProductIDAndMemberID,
   DeleteOrder,
+  GetSellerByMemberId,
 } from "../../../services/http/index";
 import Logo from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/logo.png";
 import Back from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/back-arrow.png";
@@ -204,8 +205,31 @@ const Index: React.FC = () => {
     },
   ];
 
-  const goToProductPage = () => {
-    navigate("/HomeMember");
+  const handleHome = async () => {
+    if (MemberID === null) {
+      messageApi.open({ type: "error", content: "ไม่พบ ID สมาชิก" });
+      return;
+    }
+  
+    try {
+      const sellerData = await GetSellerByMemberId(MemberID);
+      if (sellerData && sellerData.error) {
+        messageApi.open({
+          type: "error",
+          content: sellerData.error,
+        });
+        navigate('/HomeMember');
+      } else if (sellerData) {
+        navigate('/HomeSeller');
+      } else {
+        navigate('/HomeMember');
+      }
+    } catch (error) {
+      messageApi.open({
+        type: "error",
+        content: "เกิดข้อผิดพลาดในการดึงข้อมูลผู้ขาย",
+      });
+    }
   };
 
   const goToReview = () => {
@@ -275,7 +299,7 @@ const Index: React.FC = () => {
           <Button className="button-icon button-icon3">
             <img src={Notification} alt="Notification" />
           </Button>
-          <Button className="button-icon button-icon4" onClick={goToProductPage}>
+          <Button className="button-icon button-icon4" onClick={handleHome}>
             <img src={Back} alt="Back" />
           </Button>
         </div>

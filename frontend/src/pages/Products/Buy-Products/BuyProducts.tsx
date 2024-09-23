@@ -1,13 +1,14 @@
 import {  Minus, Plus } from "phosphor-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"; // เพิ่ม useParams
-import { CreateOrder, CreateProductsOrder, GetProductsById ,CreateRoomChat} from '../../../services/http/index';
+import { CreateOrder, CreateProductsOrder, GetProductsById ,CreateRoomChat,GetSellerByMemberId} from '../../../services/http/index';
 import "./BuyProducts.css";
 import Logo from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/logo.png";
 import Back from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/back-arrow.png";
 import List from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/list.png";
 import Notification from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/notifications-button.png";
 import ShoppingCartIcon from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/shopping-cart.png";
+import { message} from "antd";
 
 interface Products {
   Title: string;
@@ -24,7 +25,8 @@ const Byproduct: React.FC = () => {
   const navigate = useNavigate();
   const [memberId, setMemberId] = useState<number | null>(null);
   const MemberID = Number(localStorage.getItem("id"));
-  const [Title, setSearchTitle] = useState<string>(""); 
+  const [Title, setSearchTitle] = useState<string>("");
+  const [messageApi, contextHolder] = message.useMessage();
 
   const { id } = useParams<{ id: string }>(); // ใช้ useParams เพื่อรับ productId จาก path
   const productId = Number(id); // แปลงค่า id เป็นตัวเลข
@@ -123,6 +125,33 @@ const Byproduct: React.FC = () => {
     }
     setIsModalVisible(false); // ปิด Modal หลังจากสร้างคำสั่งซื้อเสร็จสิ้น
   };
+
+  const handleHome = async () => {
+    if (MemberID === null) {
+      messageApi.open({ type: "error", content: "ไม่พบ ID สมาชิก" });
+      return;
+    }
+  
+    try {
+      const sellerData = await GetSellerByMemberId(MemberID);
+      if (sellerData && sellerData.error) {
+        messageApi.open({
+          type: "error",
+          content: sellerData.error,
+        });
+        navigate('/HomeMember');
+      } else if (sellerData) {
+        navigate('/HomeSeller');
+      } else {
+        navigate('/HomeMember');
+      }
+    } catch (error) {
+      messageApi.open({
+        type: "error",
+        content: "เกิดข้อผิดพลาดในการดึงข้อมูลผู้ขาย",
+      });
+    }
+  };
   
 
   if (!product) {
@@ -175,7 +204,7 @@ const Byproduct: React.FC = () => {
             <img src={Notification} alt='Notification' />
           </button>
 
-          <button className='button-icon button-icon4' onClick={goToIndexPage}>
+          <button className='button-icon button-icon4' onClick={handleHome}>
             <img src={Back} alt='Back' />
           </button>
 
