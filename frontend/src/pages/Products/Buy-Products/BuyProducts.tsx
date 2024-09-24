@@ -1,14 +1,15 @@
 import {  Minus, Plus } from "phosphor-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"; // เพิ่ม useParams
-import { CreateOrder, CreateProductsOrder, GetProductsById ,CreateRoomChat,GetSellerByMemberId} from '../../../services/http/index';
+import { CreateOrder, CreateProductsOrder, GetProductsById ,CreateRoomChat,GetSellerByMemberId,GetMemberBySeller} from '../../../services/http/index';
 import "./BuyProducts.css";
 import Logo from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/logo.png";
 import Back from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/back-arrow.png";
 import List from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/list.png";
 import Notification from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/notifications-button.png";
 import ShoppingCartIcon from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/shopping-cart.png";
-import { message} from "antd";
+import { message ,Avatar ,Button} from "antd";
+import ShopRating from '../../Review/ReviewSeller/ShopRating';
 
 interface Products {
   Title: string;
@@ -16,6 +17,14 @@ interface Products {
   PictureProduct: string;
   Description: string;
   SellerID: number;
+}
+
+interface MemberBySeller {
+  MemberID: number;
+  FirstName: string;
+  LastName: string;
+  ProfilePic: string;
+  SellerID: string;
 }
 
 const Byproduct: React.FC = () => {
@@ -27,6 +36,9 @@ const Byproduct: React.FC = () => {
   const MemberID = Number(localStorage.getItem("id"));
   const [Title, setSearchTitle] = useState<string>("");
   const [messageApi, contextHolder] = message.useMessage();
+  const [seller, setSeller] = useState<MemberBySeller | null>(null); // เก็บข้อมูลของผู้ขาย
+  const [isShopRatingVisible, setIsShopRatingVisible] = useState(false); 
+
 
   const { id } = useParams<{ id: string }>(); // ใช้ useParams เพื่อรับ productId จาก path
   const productId = Number(id); // แปลงค่า id เป็นตัวเลข
@@ -46,6 +58,14 @@ const Byproduct: React.FC = () => {
     setQuantity(quantity + 1);
   };
 
+  const handleShopRating = () => {
+    setIsShopRatingVisible(true); // Open the modal
+  };
+
+  const closeShopRating = () => {
+    setIsShopRatingVisible(false); // Close the modal
+  };
+
   const decreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -57,6 +77,22 @@ const Byproduct: React.FC = () => {
       navigate(`/search/${Title}`); // นำทางไปยัง path ที่ต้องการ
     }
   };
+
+  useEffect(() => {
+    const fetchProductAndSeller = async () => {
+      const data: Products = await GetProductsById(productId);
+      if (data) {
+        setProduct(data);
+        // ดึงข้อมูลผู้ขายโดยใช้ SellerID
+        const sellerData = await GetMemberBySeller(data.SellerID);
+        if (sellerData) {
+          setSeller(sellerData); // เซ็ตข้อมูลผู้ขายลงใน state
+        }
+      }
+    };
+    fetchProductAndSeller();
+  }, [productId]);
+  
 
   const goToIndexPage = () => {
     navigate('/HomeMember');
@@ -225,9 +261,34 @@ const Byproduct: React.FC = () => {
           <div className="rectangle">
             <h1>{product.Description}</h1>
           </div>
+          <div className="seller-info">
+            {seller && (
+              <div className="seller-container">
+                <Avatar
+                  src={seller?.ProfilePic}
+                  alt={`Contact ${seller?.FirstName || 'Unknown Seller'}`}
+                  className="custom-avatar" // เพิ่ม class สำหรับ CSS
+                />
+                <p className="seller-name">{seller?.FirstName} {seller?.LastName}</p>
+              </div>
+
+            )}
+          </div>
+          <Button onClick={handleShopRating} type="primary" style={{ 
+            backgroundColor: '#ff8c1a',
+            borderColor: '#ff8c1a',
+            marginTop: 670,
+            marginLeft: 50}}>
+                ดูรีวิว
+          </Button>
+          <ShopRating
+            sellerID={product.SellerID} // You can replace this with the actual seller ID
+            visible={isShopRatingVisible}
+            onClose={closeShopRating}
+          />
+          </div>
         </div>
       </div>
-     </div>
     
   );
 };

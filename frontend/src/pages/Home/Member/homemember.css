@@ -4,7 +4,6 @@
   background-color: rgb(255, 255, 255);
 }
 
-
 .box-pagemember img{
   width: 1000px;
   height: 400px;
@@ -35,7 +34,6 @@
   margin-left: 20px;
 }
 
-
 /*ปรับขนาด 3*3 ไม่ต้องยุ่งดีกว่า*/
 .products {
   position: absolute;
@@ -46,7 +44,6 @@
   grid-template-columns: 1fr 1fr 1fr 1fr ;
   place-items: center;
 }
-
 
 .product .description .name-pro{
   font-size: 18px;
@@ -60,5 +57,9 @@
 /*ส่วนเสริม*/
 .product:hover {
   transition: 0.3s ease-in;
+  cursor: pointer;
+}
+
+.category-icon {
   cursor: pointer;
 }

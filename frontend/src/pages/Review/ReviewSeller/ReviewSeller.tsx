@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { Alert, Button, Modal, Rate, Spin, Table } from 'antd';
 import axios from 'axios';
-import { Table, Spin, Alert, Button, Modal, Rate } from 'antd';
-import { ProductsInterface  } from '../../../interfaces/Products';
-import { Review } from '../../../interfaces/review';
-import { MemberInterface } from '../../../interfaces/Member'; // import interface สำหรับ Member
+import React, { useEffect, useState } from 'react';
 import Navbarproducts from '../../../component/NavbarSellerReview';
+import { MemberInterface } from '../../../interfaces/Member'; // import interface สำหรับ Member
+import { ProductsInterface } from '../../../interfaces/Products';
+import { Review } from '../../../interfaces/review';
 import './ReviewSeller.css'; // นำเข้า CSS
 
 const ReviewSell: React.FC = () => {
@@ -16,7 +16,7 @@ const ReviewSell: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [members, setMembers] = useState<MemberInterface[]>([]); // state สำหรับเก็บข้อมูลสมาชิก
 
-  const sellerID = 1; // sellerID อันนี้ set ไว้อยู่
+  const sellerID = 1;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -78,8 +78,8 @@ const ReviewSell: React.FC = () => {
         columns={[
           {
             title: <div style={{ textAlign: 'center' }}>Picture</div>,
-            dataIndex: 'Picture_product',
-            key: 'Picture_product',
+            dataIndex: 'PictureProduct',
+            key: 'PictureProduct',
             align: 'center',
             width: 200,
             render: (text: string) => (
@@ -96,8 +96,8 @@ const ReviewSell: React.FC = () => {
           },
           {
             title: <div style={{ textAlign: 'center' }}>Title</div>,
-            dataIndex: 'Title',
-            key: 'Title',
+            dataIndex: 'Description',
+            key: 'Description',
             width: 800,
             className: 'column-title',
           },

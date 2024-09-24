@@ -17,7 +17,7 @@ interface Product {
   ID: number;
   Title: string;
   Price: number;
-  Picture_product: string;
+  PictureProduct: string;
   Description: string;
   SellerID: number;
   OrderID?: number;
@@ -136,10 +136,10 @@ const Index: React.FC = () => {
     },
     {
       title: "Picture",
-      dataIndex: "Picture_product",
-      key: "picture",
+      dataIndex: "PictureProduct",
+      key: "PictureProduct",
       render: (_, record) => (
-        <img src={record.Picture_product} alt={record.Title} width="170" />
+        <img src={record.PictureProduct} alt={record.Title} width="170" />
       ),
     },
     {
@@ -154,17 +154,6 @@ const Index: React.FC = () => {
           size="large"
           danger
         />
-      ),
-    },
-    {
-      title: <div style={{ textAlign: 'center' }}>Review</div>,
-      key: 'review',
-      align: 'center',
-      width: 200,
-      render: (_, record) => (
-        <Button onClick={() => showModal(record)} type="primary" style={{ backgroundColor: '#ff8c1a', borderColor: '#ff8c1a' }}>
-          รีวิวสินค้า
-        </Button>
       ),
     },
   ];

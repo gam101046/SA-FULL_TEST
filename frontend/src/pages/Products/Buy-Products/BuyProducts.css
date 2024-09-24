@@ -390,6 +390,29 @@
 }
 
 
+.seller-container {
+  margin-top: 670px;
+  margin-left: 150px;
+  display: flex;
+  align-items: center; /* จัดให้อยู่กึ่งกลางในแนวตั้ง */
+}
+
+.seller-name {
+  margin-left: 10px; /* เพิ่มระยะห่างระหว่าง Avatar และชื่อ */
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+.custom-avatar {
+  width: 60px;  /* ปรับขนาดกว้าง */
+  height: 60px; /* ปรับขนาดสูง */
+  object-fit: cover; /* เพื่อให้ภาพแสดงในรูปแบบที่ดี */
+}
+
+
+
+
 .button-icon1,
 .button-icon2,
 .button-icon3,

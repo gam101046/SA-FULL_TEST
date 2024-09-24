@@ -1,6 +1,6 @@
 .home-main-page{
   width: 100vw;
-  height: 100vw;
+  height: 150vw;
   background-color: rgb(255, 255, 255);
 }
 
@@ -180,5 +180,9 @@
 /*ส่วนเสริม*/
 .product:hover {
   transition: 0.3s ease-in;
+  cursor: pointer;
+}
+
+.category-icon {
   cursor: pointer;
 }

@@ -6,13 +6,23 @@ import Logo from "../assets/logo.png";
 import market from "../assets/shopping-cart.png";
 import "./navbarSeller.css";
 import Chat from "../assets/chat.png";
+import ShopRating from '../pages/Review/ReviewSeller/ShopRating';
 
 const NavbarSeller = () => {
   const navigate = useNavigate(); // Hook for navigation
   const [Title, setSearchTitle] = useState<string>("");
+  const [isShopRatingVisible, setIsShopRatingVisible] = useState(false); 
 
   const handleCreateProduct = () => {
     navigate('/createproducts'); // Navigate to ApplyToSeller page
+  };
+
+  const handleShopRating = () => {
+    setIsShopRatingVisible(true); // Open the modal
+  };
+
+  const closeShopRating = () => {
+    setIsShopRatingVisible(false); // Close the modal
   };
 
   const handleSearch = (e: React.KeyboardEvent) => {
@@ -23,6 +33,8 @@ const NavbarSeller = () => {
   const handleChatSeller = () => {
     navigate('/ChatSeller'); // Navigate to ApplyToSeller page
   };
+
+  
 
   return (
     <div className='navbarseller'>
@@ -50,13 +62,18 @@ const NavbarSeller = () => {
                     เพิ่มสินค้า
                   </button>
                   <div className="box-navbarseller">
-                    <img src={market} alt="market"/>
+                    <img src={market} alt="market" onClick={handleShopRating}/>
                     <img src={list} alt="list"/>
                     <img src={bell} alt="bell"/>
                     <img src={Chat} alt="Chat" onClick={handleChatSeller}/>
                   </div>
                 </div>
               </div>
+              <ShopRating
+        sellerID={1} // You can replace this with the actual seller ID
+        visible={isShopRatingVisible}
+        onClose={closeShopRating}
+      />
               </div>
   );
 }

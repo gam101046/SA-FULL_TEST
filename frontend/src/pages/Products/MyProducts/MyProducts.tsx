@@ -10,6 +10,7 @@ import List from "../../../assets/list.png";
 import Notification from "../../../assets/notifications-button.png";
 import ShoppingCartIcon from "../../../assets/shopping-cart.png";
 import { SellerInterface } from "../../../interfaces/Seller";
+import ShopRating from "../../Review/ReviewSeller/ShopRating";
 
 const { Meta } = Card;
 
@@ -31,7 +32,7 @@ const Index: React.FC = () => {
   const [seller, setSeller] = useState<SellerInterface | null>(null);
   const [sellerId, setSellerId] = useState<number | null>(null);
   const [products, setProducts] = useState<Products[]>([]);
-
+  const [isShopRatingVisible, setIsShopRatingVisible] = useState(false); 
 
 
   // Fetch products by seller ID
@@ -70,6 +71,10 @@ const Index: React.FC = () => {
     navigate('/HomeSeller');
   };
 
+  const goToReviwe = () => {
+    navigate('/ReviewSeller');
+  };
+
   const handleToEditProduct = (id: number) => {
     // When clicking on a product, navigate to /EditProducts with the product ID
     navigate(`/EditProducts/${id}`);
@@ -78,13 +83,20 @@ const Index: React.FC = () => {
   const handleCreateProduct = () => {
     navigate('/createproducts'); // Navigate to ApplyToSeller page
   };
+  const handleShopRating = () => {
+    setIsShopRatingVisible(true); // Open the modal
+  };
+  const closeShopRating = () => {
+    setIsShopRatingVisible(false); // Close the modal
+  };
+
 
   return (
     <div className="myproducts">
       {contextHolder}
       <h1>My Products</h1>
-      <Button className="button-review1">รีวิว</Button>
-      <Button className="button-score2">คะแนนร้านค้า</Button>
+      <Button className="button-review1" onClick={goToReviwe}>รีวิว</Button>
+      <Button className="button-score2" onClick={handleShopRating} >คะแนนร้านค้า</Button>
       <Button className="button-product3"onClick={handleCreateProduct}>เพิ่มสินค้า</Button>
       <Button className='button-icon button-icon0'>
         <img src={Chat} alt='Chat' />
@@ -129,6 +141,11 @@ const Index: React.FC = () => {
             <p>ไม่มีสินค้าที่แสดงผล</p>
           )}
       </div>
+      <ShopRating
+        sellerID={sellerId} // You can replace this with the actual seller ID
+        visible={isShopRatingVisible}
+        onClose={closeShopRating}
+      />
     </div>
   );
 };
