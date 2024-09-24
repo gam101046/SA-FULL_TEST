@@ -4,7 +4,9 @@ import React, { useEffect, useState } from 'react';
 import Navbarproducts from '../../../component/NavbarSellerReview';
 import { MemberInterface } from '../../../interfaces/Member'; // import interface สำหรับ Member
 import { ProductsInterface } from '../../../interfaces/Products';
+import { SellerInterface } from "../../../interfaces/Seller";
 import { Review } from '../../../interfaces/review';
+import { GetSellerByMemberId } from "../../../services/http/index";
 import './ReviewSeller.css'; // นำเข้า CSS
 
 const ReviewSell: React.FC = () => {
@@ -15,8 +17,10 @@ const ReviewSell: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<ProductsInterface | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [members, setMembers] = useState<MemberInterface[]>([]); // state สำหรับเก็บข้อมูลสมาชิก
+  const MemberID = Number(localStorage.getItem("id"));
+  const [seller, setSeller] = useState<SellerInterface | null>(null);
+  const [sellerID, setSellerId] = useState<number | null>(null);
 
-  const sellerID = 1;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -27,6 +31,20 @@ const ReviewSell: React.FC = () => {
         setError('เกิดข้อผิดพลาดในการดึงข้อมูลสินค้า');
       }
     };
+
+
+    const fetchSellerData = async () => {
+      try {
+        const sellerData = await GetSellerByMemberId(MemberID);
+        console.log("Seller data from API: ", sellerData); // ตรวจสอบข้อมูลที่ได้จาก API
+        setSeller(sellerData.seller);
+        setSellerId(sellerData.seller_id); // เก็บข้อมูล seller ใน state
+      } catch (error) {
+        console.error("Error fetching seller data:", error);
+      }
+    };
+
+    
 
     const fetchReviews = async () => {
       try {
@@ -48,6 +66,8 @@ const ReviewSell: React.FC = () => {
       }
     };
 
+    
+    fetchSellerData();
     fetchProducts();
     fetchReviews();
     fetchMembers(); // เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลสมาชิก

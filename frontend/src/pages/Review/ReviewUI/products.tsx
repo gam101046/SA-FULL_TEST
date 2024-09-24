@@ -18,11 +18,7 @@ const ProductDisplay: React.FC = () => {
   const [rating, setRating] = useState<number>(5);
   const navigate = useNavigate();
 
-  // กำหนด MemberID เป็น 4
-  const getMemberByID = () => {
-    return 4; // ตั้งค่า MemberID เป็น 4
-  };
-
+  
   useEffect(() => {
     const fetchProductsAndReviews = async () => {
       try {
@@ -49,7 +45,7 @@ const ProductDisplay: React.FC = () => {
   };
 
   const handleOk = async () => {
-    const memberID = getMemberByID(); // ดึง MemberID ที่นี่
+    const memberID =  Number(localStorage.getItem("id"));
     if (selectedProduct) {
       try {
         await axios.post('http://localhost:8000/review', {

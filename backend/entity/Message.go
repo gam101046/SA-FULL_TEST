@@ -9,6 +9,7 @@ type Message struct {
     Sender    Member    `gorm:"foreignKey:SenderID"` // เชื่อมต่อกับ Member
 
     Content   string
+    PictureContent string `gorm:"type:longtext"`
 
     RoomChatID uint      // Foreign key สำหรับ RoomChat
     RoomChat   RoomChat  `gorm:"foreignKey:RoomChatID"` // เชื่อมต่อกับ RoomChat

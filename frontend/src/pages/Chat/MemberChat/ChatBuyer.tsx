@@ -1,9 +1,10 @@
 
-import { Avatar, Button, message } from "antd";
+import { Avatar, Button, message ,Modal} from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { MessageInterface } from "../../../interfaces/ IMessage";
 import { useNavigate } from 'react-router-dom';
 import { HomeOutlined } from '@ant-design/icons';
+import { PictureTwoTone } from '@ant-design/icons';
 import {
   CreateMessage,
   GetMemberById,
@@ -31,6 +32,7 @@ interface MemberBySeller {
 }
 
 const Test: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false); // สำหรับเปิด/ปิด Modal
   const navigate = useNavigate();
   const [chatMembers, setChatMembers] = useState<MemberBySeller[]>([]);
   const [messages, setMessages] = useState<MessageInterface[]>([]);
@@ -40,8 +42,12 @@ const Test: React.FC = () => {
   const [roomChatID, setRoomChatID] = useState<number | null>(null);
   const [selectedSellerID, setSelectedSellerID] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
+  const MemberID = Number(localStorage.getItem("id"));
   const senderID = 2; // ID ของผู้ส่งข้อความ
+
+  const [searchName, setSearchName] = useState('');
+  const [searchResults, setSearchResults] = useState<MemberBySeller[]>([]);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   // ส่วนที่เพิ่มมาใหม่ ****start
   const [mid, setMid] = useState<number | null>(null); // เริ่มต้นด้วย null
@@ -84,38 +90,37 @@ const Test: React.FC = () => {
   // ส่วนที่เพิ่มมาใหม่******* end
 
   const onFinish = async () => {
-    if (!inputMessage.trim()) {
-      messageApi.open({ type: "error", content: "กรุณากรอกข้อความ" });
-      return;
+    if (!inputMessage.trim() && !selectedImage) {
+        messageApi.open({ type: "error", content: "กรุณากรอกข้อความ" });
+        return;
     }
 
     if (roomChatID === null) {
-      messageApi.open({ type: "error", content: "ไม่พบห้องแชท" });
-      return;
+        messageApi.open({ type: "error", content: "ไม่พบห้องแชท" });
+        return;
     }
 
     const messageData: MessageInterface = {
       room_chat_id: roomChatID,
       content: inputMessage,
+      picture_content: selectedImage || "",
       sender_id: senderID,
-    };
+  };
 
-    try {
+  try {
       const res = await CreateMessage(messageData);
       if (res) {
-        messageApi.open({ type: "success", content: "บันทึกข้อความสำเร็จ" });
-        setInputMessage("");
-        fetchMessages();
+          messageApi.open({ type: "success", content: "บันทึกข้อความสำเร็จ" });
+          setInputMessage("");
+          setSelectedImage(null); // ล้างการเลือกไฟล์หลังส่ง
+          fetchMessages();
       } else {
-        messageApi.open({ type: "error", content: "เกิดข้อผิดพลาด !" });
+          messageApi.open({ type: "error", content: "เกิดข้อผิดพลาด !" });
       }
-    } catch (error) {
-      messageApi.open({
-        type: "error",
-        content: "เกิดข้อผิดพลาดในการส่งข้อความ",
-      });
-    }
-  };
+  } catch (error) {
+      messageApi.open({ type: "error", content: "เกิดข้อผิดพลาดในการส่งข้อความ" });
+  }
+};
 
   const fetchMessages = async () => {
     if (roomChatID === null) return;
@@ -133,14 +138,9 @@ const Test: React.FC = () => {
   };
 
   const fetchChatMembers = async () => {
-    if (mid === null) {
-      messageApi.open({ type: "error", content: "ไม่พบ ID สมาชิก" });
-      return;
-    }
-  
     setLoading(true);
     try {
-      const rooms = await RoomChatByMemberID(mid); // mid is guaranteed to be a number here
+      const rooms = await RoomChatByMemberID(MemberID);
       const memberPromises = rooms.map(async (room: any) => {
         if (room.SellerID) {
           const sellerData = await GetMemberBySeller(room.SellerID);
@@ -150,18 +150,14 @@ const Test: React.FC = () => {
         }
         return null;
       });
-  
+
       const members = await Promise.all(memberPromises);
       setChatMembers(members.filter((member) => member !== null) as MemberBySeller[]);
     } catch (error) {
-      messageApi.open({
-        type: "error",
-        content: "เกิดข้อผิดพลาดในการดึงรายชื่อคนที่เราแชทด้วย",
-      });
+      messageApi.open({ type: "error", content: "เกิดข้อผิดพลาดในการดึงรายชื่อคนที่เราแชทด้วย" });
     }
     setLoading(false);
   };
-  
 
   useEffect(() => {
     if (mid !== null) {
@@ -200,8 +196,53 @@ const Test: React.FC = () => {
       });
     }
   };
-  
+  //---------------**
+  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            // แปลงไฟล์เป็น Base64
+            const base64String = reader.result as string;
+            setSelectedImage(base64String); // เก็บ Base64 ใน state
+        };
+        reader.readAsDataURL(file); // เริ่มอ่านไฟล์
+    }
+};
 
+// ฟังก์ชันสำหรับเปิด modal พร้อมแสดงรูปภาพที่ถูกเลือก
+  const handleImageClick = (imageSrc: string) => {
+    setSelectedImage(imageSrc);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null); // ล้างค่ารูปเมื่อปิด modal
+  };
+  // ฟังก์ชันสำหรับคลิกเลือกจากผลการค้นหา
+  const handleChatMemberSelectFromSearch = (member: MemberBySeller) => {
+    handleChatMemberSelect(member.SellerID); // เรียกใช้ฟังก์ชันดึงห้องแชทโดยใช้ SellerID
+    setSearchResults([]); // ล้างผลการค้นหา
+    setSearchName(""); // ล้างข้อความในช่องค้นหา
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.value;
+    setSearchName(name);
+
+    if (name.length > 0) {
+      const filteredMembers = chatMembers.filter(member =>
+        member.FirstName.toLowerCase().includes(name.toLowerCase()) ||
+        member.LastName.toLowerCase().includes(name.toLowerCase())
+      );
+      setSearchResults(filteredMembers);
+    } else {
+      setSearchResults([]); // ถ้าไม่มีการค้นหา
+    }
+  };
+
+//--------------**
   const selectedChatMember = chatMembers.find(
     (member) => member.SellerID === selectedSellerID
   );
@@ -237,7 +278,28 @@ const Test: React.FC = () => {
     <div className="container">
       {/* {contextHolder} */}
       <div className="sidebar">
-        <input type="text" placeholder="ค้นหา (3K)" />
+      <input
+          type="text"
+          placeholder="ค้นหา (3K)"
+          value={searchName}
+          onChange={handleSearch}
+        />
+        <ul>
+          {searchResults.length > 0 ? (
+            searchResults.map((member) => (
+              <li
+                key={member.MemberID}
+                onClick={() => handleChatMemberSelectFromSearch(member)}
+                style={{ cursor: "pointer" }} // เพิ่ม cursor เพื่อให้รู้ว่าเป็นการคลิกได้
+              >
+                {member.FirstName} {member.LastName}
+              </li>
+            ))
+          ) : (
+            <li>ไม่มีผลลัพธ์</li>
+          )}
+        </ul>
+
         {chatMembers.length > 0 ? (
           chatMembers.map((chatMember) => (
             <div
@@ -281,34 +343,62 @@ const Test: React.FC = () => {
         </div>
 
         <div className="chat-body">
-          {messages.map((msg, index) => (
+        {messages.map((msg, index) => (
             <div
               key={index}
-              className={`message ${
-                msg.SenderID === senderID ? "current-user" : "other-user"
-              }`}
+              className={`message ${msg.SenderID === senderID ? 'current-user' : 'other-user'}`}
             >
-              <div className="text">{msg.Content}</div>
+              {msg.Content && <div className="text">{msg.Content}</div>}
+
+              {/* แสดงรูปภาพถ้ามี และเมื่อคลิกจะขยาย */}
+              {msg.PictureContent && (
+                <img
+                  src={msg.PictureContent}
+                  alt={`Sent image ${index}`}
+                  style={{ maxWidth: '200px', marginTop: '10px', cursor: 'pointer' }}
+                  onClick={() => handleImageClick(msg.PictureContent)} // เมื่อคลิกจะแสดง modal
+                />
+              )}
             </div>
-          ))}
-          <div ref={messagesEndRef} />
+              ))}
+            <div ref={messagesEndRef} />
         </div>
 
         <div className="chat-footer">
+        <input
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            id="file-input"
+            onChange={handleImageSelect}
+          />
+          <label htmlFor="file-input">
+            <PictureTwoTone
+              style={{ fontSize: '30px', cursor: 'pointer', marginRight: '10px' }}
+            />
+          </label>
+
           <input
             type="text"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             placeholder="พิมพ์ข้อความ..."
-            onKeyDown={(e) => e.key === "Enter" && onFinish()}
+            onKeyDown={(e) => e.key === 'Enter' && onFinish()}
           />
-          <Button type="primary" onClick={onFinish} style={{ marginLeft: "10px" }}>
+          <Button type="primary" onClick={onFinish} style={{ marginLeft: '10px' }}>
             ส่ง
           </Button>
         </div>
       </div>
+      <Modal visible={isModalOpen} footer={null} onCancel={handleModalClose} centered>
+        {selectedImage && <img src={selectedImage} alt="Enlarged" style={{ width: '100%' }} />}
+      </Modal>
     </div>
   );
 };
 
 export default Test;
+
+
+
+

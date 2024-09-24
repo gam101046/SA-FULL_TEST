@@ -27,9 +27,10 @@ func GetMessages(c *gin.Context) {
 
 func CreateMessage(c *gin.Context) {
     var request struct {
-        RoomChatID uint   `json:"room_chat_id"`
-        Content    string `json:"content"`
-        SenderID   uint   `json:"sender_id"`
+        RoomChatID    uint   `json:"room_chat_id"`
+        Content       string `json:"content"`
+        SenderID      uint   `json:"sender_id"`
+        PictureContent string `json:"picture_content"` //-----------------------เพิ่มรูป---------------------------// เพิ่มฟิลด์สำหรับรูปภาพ
     }
 
     if err := c.BindJSON(&request); err != nil {
@@ -40,9 +41,10 @@ func CreateMessage(c *gin.Context) {
     db := config.DB()
 
     newMessage := entity.Message{
-        RoomChatID: request.RoomChatID,
-        Content:    request.Content,
-        SenderID:   request.SenderID,
+        RoomChatID:    request.RoomChatID,
+        Content:       request.Content,
+        SenderID:      request.SenderID,
+        PictureContent: request.PictureContent, // เก็บข้อมูลรูปภาพ
     }
 
     if err := db.Create(&newMessage).Error; err != nil {
