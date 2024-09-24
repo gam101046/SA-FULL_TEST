@@ -3,7 +3,7 @@ import { Button, Modal, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DeleteOrder, GetOrdersByProductIDAndSellerID, GetProductsBySellerId ,GetMemberById} from "../../../services/http/index";
+import { DeleteOrder, GetOrdersByProductIDAndSellerID, GetProductsBySellerId, GetMemberById, GetSellerByMemberId } from "../../../services/http/index";
 import "./PurchaseList.css";
 import Chat from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/chat.png";
 import Logo from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/logo.png";
@@ -11,9 +11,9 @@ import Back from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/s
 import List from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/list.png";
 import Notification from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/notifications-button.png";
 import ShoppingCartIcon from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/shopping-cart.png";
+import { SellerInterface } from "../../../interfaces/Seller";
 
-
-interface Product {
+interface Product{
   ID: number;
   Title: string;
   Price: number;
@@ -26,7 +26,6 @@ interface Product {
   PhoneNumber?: string;
 }
 
-
 interface Order {
   ID: number;
   Quantity: number;
@@ -35,76 +34,85 @@ interface Order {
   MemberID: number;
 }
 
-interface Member {
+interface MemberByOrder {
   FirstName?: string;
   LastName?: string;
   PhoneNumber?: string;
 }
 
 
+
 const Index: React.FC = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
+  const [seller, setSeller] = useState<SellerInterface | null>(null);
   const [messageApi, contextHolder] = message.useMessage();
   const MemberID = Number(localStorage.getItem("id"));
-  
+  const [sellerID, setSellerId] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState<string>();
   const [deleteId, setDeleteId] = useState<number | undefined>();
 
-
-  const fetchProducts = async (page: number = 1, pageSize: number = 10) => {
-    const sellerId = 2;
+  const fetchSellerData = async () => {
     try {
-      const result = await GetProductsBySellerId(sellerId, page, pageSize);
+      const sellerData = await GetSellerByMemberId(MemberID);
+      console.log("Seller data from API: ", sellerData); // ตรวจสอบข้อมูลที่ได้จาก API
+      setSeller(sellerData.seller);
+      setSellerId(sellerData.seller_id); // เก็บข้อมูล seller ใน state
+    } catch (error) {
+      console.error("Error fetching seller data:", error);
+    }
+  };
+  
+  const fetchProducts = async (page: number = 1, pageSize: number = 10) => {
+    if (!seller) return;
+    try {
+      const result = await GetProductsBySellerId(sellerID, page, pageSize);
       if (result && Array.isArray(result.products)) {
         const updatedProducts: Product[] = [];
-        const uniqueProductOrderIds = new Set<number>(); // Set to keep track of unique product-order combinations
-  
+        const uniqueProductOrderIds = new Set<number>();
+
         for (const product of result.products) {
-          const orders: Order[] = await GetOrdersByProductIDAndSellerID(sellerId, product.ID);
+          const orders: Order[] = await GetOrdersByProductIDAndSellerID(sellerID , product.ID);
           if (orders && orders.length > 0) {
             for (const order of orders) {
-              const uniqueKey = `${product.ID}-${order.ID}`;
               if (!uniqueProductOrderIds.has(order.ID)) {
-                uniqueProductOrderIds.add(order.ID); // Mark this order ID as added
-  
- 
-                const memberData: Member | undefined = await GetMemberById(order.MemberID);
+                uniqueProductOrderIds.add(order.ID);
+                const memberDatabyoeder: MemberByOrder | undefined = await GetMemberById(order.MemberID);
+                console.log("membr data " + memberDatabyoeder);
+                console.log("Member ID: ", order.MemberID); // ตรวจสอบ MemberID ที่เรียก
+                console.log("Member Data: ", memberDatabyoeder);
                 updatedProducts.push({
                   ...product,
                   Price: order.Total_price,
                   OrderID: order.ID,
                   Quantity: order.Quantity,
-                  MemberID: order.MemberID,
-                  FirstName: memberData?.FirstName,
-                  LastName: memberData?.LastName,
-                  PhoneNumber: memberData?.PhoneNumber,
-                });
+                  FirstName: memberDatabyoeder.data.FirstName, // เข้าถึง FirstName ผ่าน data
+                  LastName: memberDatabyoeder.data.LastName,   // เข้าถึง LastName ผ่าน data
+                  PhoneNumber: memberDatabyoeder.data.PhoneNumber,
+                });console.log("Updated Products: ", updatedProducts);
               }
-            }
-          } else {
-            if (!uniqueProductOrderIds.has(product.ID)) {
-              uniqueProductOrderIds.add(product.ID);
-              updatedProducts.push(product);
             }
           }
         }
-  
+
         setProducts(updatedProducts);
       }
     } catch (error) {
       console.error(error);
     }
   };
-  
-  
-  
 
   useEffect(() => {
-    fetchProducts();
+    fetchSellerData(); // ดึงข้อมูล seller ก่อน
   }, []);
+
+  useEffect(() => {
+    if (seller) {
+      fetchProducts(); // ดึงข้อมูลสินค้าเมื่อได้ข้อมูล seller แล้ว
+    }
+  }, [seller]);
 
   const columns: ColumnsType<Product> = [
     {
@@ -115,7 +123,7 @@ const Index: React.FC = () => {
     {
       title: "Quantity",
       dataIndex: "Quantity",
-      key: "quantity",
+      key: "Quantity",
       align: "center",
     },
     {
@@ -127,11 +135,11 @@ const Index: React.FC = () => {
     {
       title: "Name",
       key: "memberName",
-      render: (_, record) => `${record.FirstName || ""} ${record.LastName || ""}`, // รวม FirstName และ LastName
+      render: (_, record) => `${record.FirstName || ""} ${record.LastName || ""}`,
     },
     {
       title: "PhoneNumber",
-      dataIndex: "PhoneNumber", // เพิ่มเบอร์โทรสมาชิก
+      dataIndex: "PhoneNumber",
       key: "PhoneNumber",
     },
     {
@@ -157,9 +165,8 @@ const Index: React.FC = () => {
       ),
     },
   ];
-  
 
-  const showModal = (product: Product) => {
+  const showModal = (product: ProductByOrder) => {
     setModalText(`คุณต้องการลบข้อมูลคำสั่งซื้อสำหรับสินค้าชื่อ "${product.Title}" หรือไม่?`);
     setDeleteId(product.OrderID);
     setOpen(true);
@@ -244,3 +251,4 @@ const Index: React.FC = () => {
 };
 
 export default Index;
+

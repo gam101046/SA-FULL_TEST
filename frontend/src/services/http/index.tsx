@@ -177,9 +177,6 @@ async function DeleteOrder(id: number | undefined) {
   }
 }
 
-
-
-
 //Seller
 
 

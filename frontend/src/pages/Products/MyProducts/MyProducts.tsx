@@ -32,7 +32,7 @@ const Index: React.FC = () => {
   const [seller, setSeller] = useState<SellerInterface | null>(null);
   const [sellerId, setSellerId] = useState<number | null>(null);
   const [products, setProducts] = useState<Products[]>([]);
-  const [isShopRatingVisible, setIsShopRatingVisible] = useState(false); 
+  const [isShopRatingVisible, setIsShopRatingVisible] = useState(false);
 
 
   // Fetch products by seller ID
