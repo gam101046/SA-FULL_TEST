@@ -668,6 +668,7 @@ async function GetOrdersByProductIDAndSellerID(sellerId: number, productId: numb
       const formattedData = {
         room_chat_id: messageData.room_chat_id,
         content: messageData.content,
+        picture_content: messageData.picture_content, //-----------------------เพิ่มรูป---------------------------
         sender_id: messageData.sender_id,
       };
   

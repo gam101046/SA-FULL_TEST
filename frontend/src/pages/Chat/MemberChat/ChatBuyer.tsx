@@ -1,7 +1,7 @@
 
 import { Avatar, Button, message ,Modal} from "antd";
 import React, { useEffect, useRef, useState } from "react";
-import { MessageInterface } from "../../../interfaces/ IMessage";
+import { MessageInterface } from "../../../interfaces/IMessage";
 import { useNavigate } from 'react-router-dom';
 import { HomeOutlined } from '@ant-design/icons';
 import { PictureTwoTone } from '@ant-design/icons';
@@ -398,7 +398,5 @@ const Test: React.FC = () => {
 };
 
 export default Test;
-
-
 
 
